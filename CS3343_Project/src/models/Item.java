@@ -69,6 +69,9 @@ public class Item {
     public List<Review> getReviews() {
         return reviews;
     }
+    public void addReview(Review review){
+        reviews.add(review);
+    }
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;

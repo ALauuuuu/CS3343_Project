@@ -1,7 +1,9 @@
 package models;
 
+import java.util.Date;
 import java.util.List;
 
+import components.ItemInventory;
 import components.ShoppingCart;
 import interfaces.FilterCriteria;
 import interfaces.SearchCriteria;
@@ -47,9 +49,16 @@ public class Customer extends User {
     }
 
     public boolean rateItem(int itemId, int rating, String comment) {
+        Item target = ItemInventory.getInstance().findItemByCode(itemId);
+        int reviewId = 0; // should be making a function to generate unique id or not using it
+        int userId = 0; // should be making a function to generate unique id or passing the User obj
+        Date date = new Date();
+        Review review = new Review(reviewId,userId,rating,comment,date);
+        target.addReview(review);
         return true;
     }
 
+    //this function need a new singleton class AllRefundRequests for saving all requests (maybe also a new class RefundRequest)
     public boolean requestRefund(PurchaseRecord purchaseRecord) {
         return true;
     }

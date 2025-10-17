@@ -4,15 +4,18 @@ import interfaces.SearchCriteria;
 import interfaces.SortingCriteria;
 import models.Item;
 
+import java.util.ArrayList;
 import java.util.List;
 
+//this class should be singleton
 public class ItemInventory implements SearchCriteria, SortingCriteria {
     private List<Item> items;
 
-    public ItemInventory(List<Item> items) {
-        this.items = items;
+    private static ItemInventory instance = new ItemInventory();
+    private ItemInventory() {
+        items = new ArrayList<Item>();
     }
-
+    public static ItemInventory getInstance() { return instance; }
     public List<Item> getItems() {
         return items;
     }
@@ -41,7 +44,14 @@ public class ItemInventory implements SearchCriteria, SortingCriteria {
 
     @Override
     public List<Item> searchByName(String name) {
-        return null;
+        List<Item> output = new ArrayList<Item>();
+        int i = 0;
+        while (i < items.size()) {
+            if(items.get(i).getName().toLowerCase().contains(name.toLowerCase())){
+                output.add(items.get(i));
+            }
+        }
+        return output;
     }
 
     @Override
@@ -51,7 +61,14 @@ public class ItemInventory implements SearchCriteria, SortingCriteria {
 
     @Override
     public List<Item> searchByCategory(String category) {
-        return null;
+        List<Item> output = new ArrayList<Item>();
+        int i = 0;
+        while (i < items.size()) {
+            if(items.get(i).getName().toLowerCase().contains(category.toLowerCase())){
+                output.add(items.get(i));
+            }
+        }
+        return output;
     }
 
     @Override

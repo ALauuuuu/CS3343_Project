@@ -1,6 +1,5 @@
 package main;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import components.ItemInventory;
@@ -10,7 +9,7 @@ import models.Item;
 import models.User;
 
 public class Main {
-    private static ItemInventory itemInventory = new ItemInventory(new ArrayList<>());
+    private static ItemInventory itemInventory = ItemInventory.getInstance();
     private static User currentUser;
     private static Scanner scanner = new Scanner(System.in);
 
