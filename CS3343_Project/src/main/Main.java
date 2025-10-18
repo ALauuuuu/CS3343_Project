@@ -18,7 +18,9 @@ public class Main {
         while (true) {
 
             int choice = Menu.showLoginPage();
-
+            if (choice == 3){
+                return; //Exit the program
+            }
             System.out.print("Enter username: ");
             String username = scanner.nextLine();
 
@@ -85,6 +87,7 @@ public class Main {
                     break;
                 case 3: // Search
                     System.out.println("Search functionality to be implemented.");
+                    Searching.searchMenu();
                     break;
                 case 4: // Shopping cart
                     System.out.println("Shopping cart functionality to be implemented.");

@@ -12,6 +12,7 @@ public class Menu {
             System.out.println("Online Shopping > Login");
             System.out.println("Option: 1 Customer ");
             System.out.println("Option: 2 Admin ");
+            System.out.println("Option: 3 Exit ");
             System.out.println("Please enter an option number(an integer):");
 
             try {
@@ -26,6 +27,9 @@ public class Menu {
                         // User.login();
                         System.out.println("Login as Admin");
                         return 2; // Exit the method
+                    case 3:
+                        System.out.println("Exit");
+                        return 3;
 
                     default:
                         System.out.println("Invalid option, please try again.\n");
