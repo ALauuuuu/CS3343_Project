@@ -5,6 +5,7 @@ import interfaces.SortingCriteria;
 import models.Item;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 //this class should be singleton
@@ -73,11 +74,23 @@ public class ItemInventory implements SearchCriteria, SortingCriteria {
 
     @Override
     public List<Item> sortByPrice(List<Item> list, String order) {
-        return null;
+        List<Item> output = new ArrayList<Item>(list);
+        if(order.equals("asc")){
+            output.sort(Comparator.comparingDouble(Item::getPrice));
+        }else{
+            output.sort(Comparator.comparingDouble(Item::getPrice).reversed());
+        }
+        return output;
     }
 
     @Override
     public List<Item> sortByRating(List<Item> list, String order) {
-        return null;
+        List<Item> output = new ArrayList<Item>(list);
+        if(order.equals("asc")){
+            output.sort(Comparator.comparingDouble(Item::getAverageRating));
+        }else{
+            output.sort(Comparator.comparingDouble(Item::getAverageRating).reversed());
+        }
+        return output;
     }
 }
