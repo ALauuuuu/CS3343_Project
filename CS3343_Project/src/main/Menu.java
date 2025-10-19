@@ -14,7 +14,6 @@ public class Menu {
             System.out.println("Option: 2 Admin ");
             System.out.println("Option: 3 Exit ");
             System.out.println("Please enter an option number(an integer):");
-
             try {
                 int choice = input.nextInt();
                 switch (choice) {
@@ -37,7 +36,7 @@ public class Menu {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Wrong input, please enter an integer.\n");
-                showLoginPage(); // Recursive call to restart the login process
+                input.nextLine(); //clear buffer
             }
         }
     }

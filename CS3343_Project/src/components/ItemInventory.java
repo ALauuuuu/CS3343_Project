@@ -7,6 +7,7 @@ import models.Item;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 //this class should be singleton
 public class ItemInventory implements SearchCriteria, SortingCriteria {
@@ -43,6 +44,17 @@ public class ItemInventory implements SearchCriteria, SortingCriteria {
         }
     }
 
+    public List<String> getAllCategory(){
+        List<String> output = new ArrayList<String>();
+        int i = 0;
+        while (i < items.size()) {
+            output.add(items.get(i).getCategory());
+            i++;
+        }
+        output = output.stream().distinct().collect(Collectors.toList()); //remove duplicates
+        return output;
+    }
+
     @Override
     public List<Item> searchByName(String name) {
         List<Item> output = new ArrayList<Item>();
@@ -51,6 +63,7 @@ public class ItemInventory implements SearchCriteria, SortingCriteria {
             if(items.get(i).getName().toLowerCase().contains(name.toLowerCase())){
                 output.add(items.get(i));
             }
+            i++;
         }
         return output;
     }
@@ -65,9 +78,10 @@ public class ItemInventory implements SearchCriteria, SortingCriteria {
         List<Item> output = new ArrayList<Item>();
         int i = 0;
         while (i < items.size()) {
-            if(items.get(i).getName().toLowerCase().contains(category.toLowerCase())){
+            if(items.get(i).getCategory().toLowerCase().contains(category.toLowerCase())){
                 output.add(items.get(i));
             }
+            i++;
         }
         return output;
     }

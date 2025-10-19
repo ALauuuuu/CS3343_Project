@@ -3,6 +3,13 @@ package main;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import components.ItemInventory;
+
+import java.util.List;
+
+import models.Customer;
+import models.Item;
+
 public class Searching {
     private static final Scanner input = new Scanner(System.in);
     public static void searchMenu(){
@@ -19,10 +26,10 @@ public class Searching {
                         searchByName();
                         break; // Exit the method
                     case 2:
-                        
+                        searchByCode();
                         break; // Exit the method
                     case 3:
-
+                        searchByCategory();
                         break;
                     default:
                         System.out.println("Invalid option, please try again.\n");
@@ -30,12 +37,46 @@ public class Searching {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Wrong input, please enter an integer.\n");
-                searchMenu(); // Recursive call to restart the search process
+                input.nextLine(); //clear buffer
             }
         }
     }
     private static void searchByName(){
-        System.out.println("");
+        System.out.println("Please enter item name:");
+        List<Item> target = Customer.searchByName(input.next());
+        System.out.println("There are "+target.size()+" item(s) found.");
+        for(int i=0; i < target.size(); i++){
+            System.out.println(target.get(i).getDetails());
+        }
     }
-
+    private static void searchByCode(){
+        System.out.println("Please enter item code:");
+        try{
+            Item target = Customer.searchByCode(input.nextInt());
+            System.out.println(target.getDetails());
+        } catch (InputMismatchException e){
+            System.out.println("Wrong input, please enter an integer.\n");
+            input.nextLine(); //clear buffer
+            searchByCode();
+        }
+            
+    }
+    private static void searchByCategory(){
+        System.out.println("Please select item Category:");
+        List<String> allCat = ItemInventory.getInstance().getAllCategory();
+        for(int i = 0; i < allCat.size(); i++)
+            System.out.println("Option: "+(i+1)+" "+allCat.get(i));
+        try{
+            List<Item> target = Customer.searchByCategory(allCat.get(input.nextInt()-1));
+            System.out.println("There are "+target.size()+" item(s) found.");
+            for(int i=0; i < target.size(); i++)
+                System.out.println(target.get(i).getDetails());
+        } catch (InputMismatchException e){
+            System.out.println("Wrong input, please enter an integer.\n");
+            input.nextLine(); //clear buffer
+            searchByCategory();
+        }
+        
+        }
 }
+

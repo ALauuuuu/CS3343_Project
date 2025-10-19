@@ -6,7 +6,6 @@ import java.util.List;
 import components.ItemInventory;
 import components.ShoppingCart;
 import interfaces.FilterCriteria;
-import interfaces.SearchCriteria;
 import interfaces.PaymentMethod;
 
 public class Customer extends User {
@@ -19,11 +18,17 @@ public class Customer extends User {
         this.shoppingCart = new ShoppingCart();
     }
 
-    public List<Item> searchItems(SearchCriteria criteria) {
-        return null;
+    public static List<Item> searchByName(String name) {
+        return ItemInventory.getInstance().searchByName(name);
+    }
+    public static Item searchByCode(int code) {
+        return ItemInventory.getInstance().searchByCode(code);
+    }
+    public static List<Item> searchByCategory(String category) {
+        return ItemInventory.getInstance().searchByCategory(category);
     }
 
-    public List<Item> filterItems(FilterCriteria criteria) {
+    public static List<Item> filterItems(FilterCriteria criteria) {
         return null;
     }
 
