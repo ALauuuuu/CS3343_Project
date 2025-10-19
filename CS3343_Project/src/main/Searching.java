@@ -18,6 +18,7 @@ public class Searching {
             System.out.println("Option: 1 Search By Name ");
             System.out.println("Option: 2 Search By Code ");
             System.out.println("Option: 3 Search By Category ");
+            System.out.println("Option: 4 Back to Home Page ");
             System.out.println("Please enter an option number(an integer):");
             try {
                 int choice = input.nextInt();
@@ -31,6 +32,8 @@ public class Searching {
                     case 3:
                         searchByCategory();
                         break;
+                    case 4:
+                        return;
                     default:
                         System.out.println("Invalid option, please try again.\n");
                         break; // Continue the loop
