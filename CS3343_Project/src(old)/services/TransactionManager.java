@@ -1,8 +1,7 @@
-package Services;
+package services;
 
+import models.Transaction;
 import java.util.List;
-
-import Objects.Transaction;
 
 public class TransactionManager {
     private List<Transaction> transactions;

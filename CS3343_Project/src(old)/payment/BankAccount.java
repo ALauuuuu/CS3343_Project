@@ -1,4 +1,6 @@
-package Payment;
+package payment;
+
+import interfaces.PaymentMethod;
 
 public class BankAccount implements PaymentMethod {
     private String accountId;

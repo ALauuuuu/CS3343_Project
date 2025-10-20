@@ -1,5 +1,6 @@
-package Payment;
+package payment;
 
+import interfaces.PaymentMethod;
 import java.util.Date;
 
 public class CreditCard implements PaymentMethod {

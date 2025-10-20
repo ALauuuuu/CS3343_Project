@@ -1,8 +1,7 @@
-package Services;
+package services;
 
+import models.Notification;
 import java.util.List;
-
-import Objects.Notification;
 
 public class NotificationManager {
     private List<Notification> notifications;
