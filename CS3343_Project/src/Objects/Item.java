@@ -20,7 +20,7 @@ public class Item {
         this.category = category;
         this.quantity = quantity;
     }
-
+ 
     public String getDetails() {
         return "Item code:" + itemCode + "\tItem name: " + name + "\tPrice: $" + price +
                "\nCategory: " + category + "\tAverage rating: " + averageRating + "/ 5.0\tQuantity: " + quantity;

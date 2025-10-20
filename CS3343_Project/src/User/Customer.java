@@ -106,10 +106,12 @@ public class Customer {
     private void searchMenu(){
         while (true) {
             System.out.println("Online Shopping > Search");
+            System.out.println("--------------------------");
             System.out.println("Option: 1 Search By Name ");
             System.out.println("Option: 2 Search By Code ");
             System.out.println("Option: 3 Search By Category ");
             System.out.println("Option: 4 Back to Home Page ");
+            System.out.println("--------------------------");
             System.out.println("Please enter an option number(an integer):");
             try {
                 int choice = userInput.nextInt();
@@ -158,8 +160,10 @@ public class Customer {
     private void searchByCategory(){
         System.out.println("Please select item Category:");
         List<String> allCat = ItemInventory.getAllCategory();
+        System.out.println("--------------------------");
         for(int i = 0; i < allCat.size(); i++)
             System.out.println("Option: "+(i+1)+" "+allCat.get(i));
+        System.out.println("--------------------------");
         try{
             List<Item> target = ItemInventory.searchByCategory(allCat.get(userInput.nextInt()-1));
             System.out.println("There are "+target.size()+" item(s) found.");
@@ -173,11 +177,69 @@ public class Customer {
     }
 
     private void shoppingCartMenu(){
-        if(this.shoppingCart.isEmpty()){
-            System.out.println("The Shopping Cart is empty.");
-            return;
+        //testing
+        this.shoppingCart.addItem(ItemInventory.searchByCode(1), 1);
+        this.shoppingCart.addItem(ItemInventory.searchByCode(2), 3);
+        this.shoppingCart.addItem(ItemInventory.searchByCode(3), 4);
+        this.shoppingCart.addItem(ItemInventory.searchByCode(1), 1);
+        //
+        while (true) {
+            System.out.println("\nOnline Shopping > Shopping Cart");
+            System.out.println("--------------------------");
+            if(this.shoppingCart.isEmpty()){
+                System.out.println("The Shopping Cart is empty.");
+            }
+            this.shoppingCart.viewCart();
+            System.out.println("Total: $"+this.shoppingCart.calculateTotal());
+            System.out.println("--------------------------");
+            System.out.println("Option: 1 Checkout");
+            System.out.println("Option: 2 Clear Cart");
+            System.out.println("Option: 3 Change Quantity for specfic item");
+            System.out.println("Option: 4 Back to Home Page ");
+            System.out.println("--------------------------");
+            System.out.println("Please enter an option number(an integer):");
+            try {
+                int choice = userInput.nextInt();
+                switch (choice) {
+                    case 1:
+                        this.checkout();
+                        break;
+                    case 2:
+                        while(true){
+                            System.out.println("Are you sure to clear the cart? (y/n):");
+                            String c = userInput.next().toLowerCase();
+                            if (c.equals("y")) {
+                                this.shoppingCart.clearCart();
+                                break;
+                            }else if(c.equals("n")){
+                                break;
+                            }else{
+                                System.out.println("Wrong input, please enter a charater.\n");
+                            }
+                        }
+                        break;
+                    case 3:
+                        System.out.println("Please enter item code(an integer):");
+                        int itemCode = userInput.nextInt();
+                        System.out.println("Please enter new quantity(an integer):");
+                        int qty = userInput.nextInt();
+                        this.shoppingCart.modifyItem(ItemInventory.searchByCode(itemCode), qty);
+                        break;
+                    case 4:
+                        return;
+                    default:
+                        System.out.println("Invalid option, please try again.\n");
+                        break; // Continue the loop
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Wrong input, please enter an integer.\n");
+                userInput.nextLine(); //clear buffer
+            }
         }
-        System.out.println("\nOnline Shopping > Shopping Cart");
-
     }
+    private void checkout(){
+        System.out.println("Checkout function will soon available");
+        return;
+    }
+
 }
