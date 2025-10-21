@@ -23,17 +23,52 @@ public class Admin {
         while (loggedIn) {
             System.out.println("\nOnline Shopping > Admin Page");
             System.out.println("--------------------------");
-            System.out.println("Admin functions will soon available");
-            System.out.println("Option: 8 Log out");
+            System.out.println("Option: 1  Add Items");
+            System.out.println("Option: 2  Remove Items");
+            System.out.println("Option: 3  Edit Items");
+            System.out.println("Option: 4 View Notifications");
+            System.out.println("Option: 5 Log out");
             System.out.println("--------------------------\n");
             try{
                 System.out.println("Please enter an option number(an integer): ");
                 int choice = userInput.nextInt();
                     switch (choice) {
-                        case 8:
-                            this.logout();
-                            loggedIn = false;
+                        case 1:
+                            System.out.println("Please enter item name, price, category, quantity: ");
+                            String name = userInput.next();
+                            double price = userInput.nextDouble();
+                            String category = userInput.next();
+                            int quantity = userInput.nextInt();
+                            Item newItem = new Item(0, name, price, category, quantity);
+                            System.out.println("Confirm addition?(y/n): ");
+                            char confirm = userInput.next().charAt(0);
+                            if (confirm == 'y' || confirm == 'Y') {
+                                System.out.println("Item added.");
+                                this.addItem(newItem);
+                            } else {
+                                System.out.println("Addition cancelled.");
+                            }
                             break;
+                            
+                        case 2:
+                            System.out.println("Remove Items selected.");
+                            // Logic to remove items
+                            break;
+                        
+                        case 3:
+                            System.out.println("Edit Items selected.");
+                            // Logic to edit items
+                            break;
+
+                        case 4:
+                            System.out.println("View Notifications selected.");
+                            // Logic to view notifications
+                            break;
+
+                        case 5:
+                            System.out.println("Logging out...");
+                            break;
+                            
                         default:
                             System.out.println("Invalid option. Please try again.");
                             break;
@@ -45,7 +80,18 @@ public class Admin {
         }
         return;
     }
-    public boolean updateItemDetails(int itemId, Item updatedInfo) {
+
+    public boolean addItem(Item newItem) {
+        // Logic to add item
+        return true;
+    }
+
+    public boolean removeItem(int itemId) {
+        // Logic to remove item
+        return true;
+    }
+
+    public boolean edititem(int itemId, Item updatedInfo) {
         // Logic to update item details
         //Item.setMethod should be add to prevent deleting directly
         //ItemInventory.getInstance().removeItem(itemId);
