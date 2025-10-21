@@ -165,6 +165,12 @@ public class Customer {
             System.out.println("Option: "+(i+1)+" "+allCat.get(i));
         System.out.println("--------------------------");
         try{
+            int choice = userInput.nextInt();
+            if (choice < 1 || choice > allCat.size()){
+            System.out.println("Invalid option, please try again! \n");
+            searchByCategory();
+            return;
+            }
             List<Item> target = ItemInventory.searchByCategory(allCat.get(userInput.nextInt()-1));
             System.out.println("There are "+target.size()+" item(s) found.");
             for(int i=0; i < target.size(); i++)
