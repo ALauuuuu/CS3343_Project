@@ -98,23 +98,30 @@ public class Admin {
     }
 
     private void handleAddItem() {
-        System.out.println("Please enter item name, price, category, quantity: ");
+
+        System.out.println("Please enter item name: ");
         String name = userInput.next();
+        System.out.println("item price: ");
         double price = userInput.nextDouble();
+        System.out.println("item category: ");
         String category = userInput.next();
+        System.out.println("item quantity: ");
         int quantity = userInput.nextInt();
+
         Item newItem = new Item(0, name, price, category, quantity);
+        
         System.out.println("Confirm addition?(y/n): ");
         char confirm = userInput.next().charAt(0);
         if (confirm == 'y' || confirm == 'Y') {
             if (this.addItem(newItem)) {
                 System.out.println("Item added.");
             } else {
-                System.out.println("Addition cancelled.");
+                System.out.println("Addition is failed.");
             }
         } else {
-            System.out.println("Addition cancelled.");
+            System.out.println("Addition is cancelled.");
         }
+
         System.out.println("Option 1: Add another item");
         System.out.println("Option 2: Return to Admin Menu");
         System.out.println("Please enter your next action: ");
@@ -124,10 +131,11 @@ public class Admin {
         } else {
             return;
         }
+        
     }
     
     private void handleRMItem() {
-        System.out.println("Please enter item code: ");
+        System.out.println("Please enter item code to remove: ");
         int itemId = userInput.nextInt();
         System.out.println("Confirm removal?(y/n): ");
         char confirm = userInput.next().charAt(0);
@@ -152,14 +160,16 @@ public class Admin {
     }
 
     private void handleEditItem() {
-        System.out.println("Please enter item code: ");
+        System.out.println("Please enter item code to edit: ");
         int itemId = userInput.nextInt();
         System.out.println("Please enter new item name, price, category, quantity: ");
+
         String name = userInput.next();
         double price = userInput.nextDouble();
         String category = userInput.next();
         int quantity = userInput.nextInt();
         Item updatedInfo = new Item(itemId, name, price, category, quantity);
+
         System.out.println("Confirm edit?(y/n): ");
         char confirm = userInput.next().charAt(0);
         if (confirm == 'y' || confirm == 'Y') {
@@ -171,9 +181,11 @@ public class Admin {
         } else {
             System.out.println("Edit cancelled.");
         }
-        System.out.println("Option 1: Edit another item");
+
+        System.out.println("\nOption 1: Edit another item");
         System.out.println("Option 2: Return to Admin Menu");
         System.out.println("Please enter your next action: ");
+        
         int choice = userInput.nextInt();
         if (choice == 1) {
             handleEditItem();
