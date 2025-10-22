@@ -3,9 +3,8 @@ package User;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import Objects.Item;
 import Instances.ItemInventory;
-import Services.NotificationManager;
+import Objects.Item;
 
 public class Admin {
     private static Scanner userInput = new Scanner(System.in);
@@ -101,12 +100,41 @@ public class Admin {
 
         System.out.println("Please enter item name: ");
         String name = userInput.next();
-        System.out.println("item price: ");
-        double price = userInput.nextDouble();
+
+        double price = 0;
+        while (true) {
+            System.out.println("Item price (number): ");
+        try {
+            price = userInput.nextDouble();
+            if (price < 0) {
+                System.out.println("Price cannot be negative. Please enter a valid number.");
+                continue;
+            }
+            break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter a NUMBER for price.");
+                userInput.nextLine(); // Clear buffer
+        }
+        }
+        
         System.out.println("item category: ");
         String category = userInput.next();
-        System.out.println("item quantity: ");
-        int quantity = userInput.nextInt();
+        
+        int quantity = 0;
+        while (true) {
+            System.out.println("Item quantity (integer): ");
+            try {
+                quantity = userInput.nextInt();
+                if (quantity < 0) {
+                    System.out.println("Quantity cannot be negative. Please enter a positive integer.");
+                    continue;
+                }
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter an INTEGER for quantity.");
+                userInput.nextLine();
+            }
+        }
 
         Item newItem = new Item(0, name, price, category, quantity);
         
@@ -131,7 +159,7 @@ public class Admin {
         } else {
             return;
         }
-        
+
     }
     
     private void handleRMItem() {
