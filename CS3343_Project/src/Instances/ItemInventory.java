@@ -9,22 +9,32 @@ import Objects.Item;
 
 public class ItemInventory {
     private List<Item> items;
+    private int itemCount;
 
     private static ItemInventory instance = new ItemInventory();
     private ItemInventory() {
         items = new ArrayList<Item>();
+        itemCount = 0;
     }
+
     public static ItemInventory getInstance() { return instance; }
     public static List<Item> getItems() {
         return instance.items;
     }
 
+    public static int getItemCount() {
+        return instance.itemCount;
+    }
+
     public static void addItem(Item item) {
         instance.items.add(item);
+        instance.itemCount++;
     }
 
     public static void removeItem(int itemCode) {
-        instance.items.removeIf(item -> item.getItemCode() == itemCode);
+        if (instance.items.removeIf(item -> item.getItemCode() == itemCode)) {
+            instance.itemCount--;
+        }
     }
 
     public static Item findItemByCode(int itemCode) {

@@ -5,12 +5,10 @@ import java.util.Date;
 public class Notification {
     private String message;
     private Date date;
-    private int transactionId;
 
-    public Notification(String message, Date date, int transactionId) {
+    public Notification(String message, Date date) {
         this.message = message;
         this.date = date;
-        this.transactionId = transactionId;
     }
 
     public String getMessage() {
@@ -19,9 +17,5 @@ public class Notification {
 
     public Date getDate() {
         return date;
-    }
-
-    public int getTransactionId() {
-        return transactionId;
     }
 }
