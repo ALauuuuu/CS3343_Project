@@ -508,8 +508,7 @@ public class Customer {
             userInput.nextLine(); // Clear buffer
         }
     }
-    
-    
+
     private void deletePaymentMethod(){
         System.out.println("\n=== Delete Payment Method ===");
     
