@@ -1,9 +1,6 @@
 package User;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.io.InputStream;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -24,12 +21,14 @@ public class Customer {
     private ShoppingCart shoppingCart;
     private List<PurchaseRecord> purchaseHistory;
     private List<Notification> notifications;
-    private List<BankAccount> bankAccount;
-    private List<CreditCard> creditCard;
-    private List<PayMe> payMe;
-
-    private static Scanner userInput = new Scanner(System.in);
-
+    private static Scanner userInput = null;
+    public static void setInputStream(InputStream in) {
+        if (in == null) {
+            userInput = null;
+            return;
+        }
+        userInput = new Scanner(in);
+    }
     public Customer(String userName){
         this.userName = userName;
         this.shoppingCart = new ShoppingCart();
@@ -46,6 +45,9 @@ public class Customer {
         System.out.println(userName + " logged out.");
     }
     private void homeMenu(){
+        if (userInput == null) {
+            userInput = new Scanner(System.in);
+        }
         boolean loggedIn = true;
         //boolean IsHomepage = true;
         int page = 0;
@@ -269,7 +271,7 @@ public class Customer {
             searchByCategory();
             return;
             }
-            List<Item> target = ItemInventory.searchByCategory(allCat.get(userInput.nextInt()-1));
+            List<Item> target = ItemInventory.searchByCategory(allCat.get(choice-1));
             System.out.println("There are "+target.size()+" item(s) found.");
             for(int i=0; i < target.size(); i++)
                 System.out.println(target.get(i).getDetails());
