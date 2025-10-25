@@ -10,7 +10,7 @@ public class Main {
         Menu.loginPage();
         return;
     }
-    private static void initializeInventory() {
+    public static void initializeInventory() {
         // Add 12 default items
         ItemInventory.addItem(new Item(1, "Toys", 100, "others", 10));
         ItemInventory.addItem(new Item(2, "Snack", 20, "food", 100));
