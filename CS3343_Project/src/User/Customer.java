@@ -1,6 +1,10 @@
 package User;
 
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -21,6 +25,9 @@ public class Customer {
     private ShoppingCart shoppingCart;
     private List<PurchaseRecord> purchaseHistory;
     private List<Notification> notifications;
+    private List<BankAccount> bankAccount;
+    private List<CreditCard> creditCard;
+    private List<PayMe> payMe;
     private static Scanner userInput = null;
     public static void setInputStream(InputStream in) {
         if (in == null) {
@@ -33,9 +40,9 @@ public class Customer {
         this.userName = userName;
         this.shoppingCart = new ShoppingCart();
         this.shoppingCart = new ShoppingCart();
-        this.bankAccount = new ArrayList<>();
-        this.creditCard = new ArrayList<>();
-        this.payMe = new ArrayList<>();
+        this.bankAccount = new ArrayList<BankAccount>();
+        this.creditCard = new ArrayList<CreditCard>();
+        this.payMe = new ArrayList<PayMe>();
     }
     public void login(){
         System.out.println(userName + " logged in.\n");
