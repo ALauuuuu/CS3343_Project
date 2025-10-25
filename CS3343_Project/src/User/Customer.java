@@ -171,7 +171,7 @@ public class Customer {
             searchByCategory();
             return;
             }
-            List<Item> target = ItemInventory.searchByCategory(allCat.get(userInput.nextInt()-1));
+            List<Item> target = ItemInventory.searchByCategory(allCat.get(choice-1));
             System.out.println("There are "+target.size()+" item(s) found.");
             for(int i=0; i < target.size(); i++)
                 System.out.println(target.get(i).getDetails());

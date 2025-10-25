@@ -14,6 +14,7 @@ public class Menu {
         Customer currentCustomer = new Customer(null);
         while (true) {
             System.out.println("Online Shopping > Login");
+            System.out.println("--------------------------");
             System.out.println("Option: 1 Customer ");
             System.out.println("Option: 2 Admin ");
             System.out.println("Option: 3 Exit ");
