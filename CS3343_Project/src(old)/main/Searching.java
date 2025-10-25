@@ -47,7 +47,7 @@ public class Searching {
     private static void searchByName(){
         System.out.println("Please enter item name:");
         List<Item> target = Customer.searchByName(input.next());
-        System.out.println("There are "+target.size()+" item(s) found.");
+        System.out.println("\nThere are " + target.size() + " item(s) found.\n");
         for(int i=0; i < target.size(); i++){
             System.out.println(target.get(i).getDetails());
         }
