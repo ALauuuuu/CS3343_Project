@@ -8,6 +8,10 @@ public class PayMe implements PaymentMethod {
         this.accountId = accountId;
     }
 
+    public String getAccountId() {
+        return accountId;
+    }
+
     @Override
     public boolean pay(double amount) {
         System.out.println("Paid " + amount + " using PayMe " + accountId);

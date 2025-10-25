@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 import Instances.ItemInventory;
 import Services.NotificationManager;
-import Services.TransactionManager;
 import Objects.Notification;
 import Objects.Item;
 
@@ -13,12 +12,10 @@ public class Admin {
     private static Scanner userInput = new Scanner(System.in);
     private String userName;
     private NotificationManager notificationManager;
-    private TransactionManager transactionManager;
 
     public Admin(String userName){
         this.userName = userName;
         this.notificationManager = new NotificationManager();
-        this.transactionManager = new TransactionManager();
     }
     
     public void login(){
@@ -161,7 +158,7 @@ public class Admin {
             if (this.addItem(newItem)) {
                 System.out.println("Item added.\n");
                 this.notificationManager.addNotifications(
-                    new Notification("New item " + name + " added to inventory.", new java.util.Date()));
+                    new Notification(new java.util.Date(), "New item " + name + " added to inventory."));
             } else {
                 System.out.println("Addition is failed.");
             }
@@ -193,7 +190,7 @@ public class Admin {
             if (this.removeItem(itemId)) {
                 System.out.println("Item removed.\n");
                 this.notificationManager.addNotifications(
-                    new Notification("Item with code " + itemId + " removed from inventory.", new java.util.Date()));
+                    new Notification(new java.util.Date(), "Item with code " + itemId + " removed from inventory."));
             } else {
                 System.out.println("Removal cancelled.\n");
             }
@@ -265,7 +262,7 @@ public class Admin {
             if (this.edititem(itemId, updatedInfo)) {
                 System.out.println("Item edited.");
                 this.notificationManager.addNotifications(
-                    new Notification("Item with code " + itemId + " edited in inventory.", new java.util.Date()));
+                    new Notification(new java.util.Date(), "Item with code " + itemId + " edited in inventory."));
             } else {
                 System.out.println("Edit cancelled.\n");
             }

@@ -9,7 +9,7 @@ public class PurchaseRecord {
     private String status;
 
     public PurchaseRecord(int recordId, Item item, Date purchaseDate, String status) {
-        this.recordId = recordId;
+        this.recordId = recordId = 1;
         this.item = item;
         this.purchaseDate = purchaseDate;
         this.status = status;

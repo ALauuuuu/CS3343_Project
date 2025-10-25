@@ -1,5 +1,9 @@
 package User;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -9,6 +13,10 @@ import Objects.Item;
 import Objects.Notification;
 import Objects.PurchaseRecord;
 import Objects.ShoppingCart;
+import Payment.BankAccount;
+import Payment.CreditCard;
+import Payment.PayMe;
+import Payment.PaymentMethod;
 
 
 public class Customer {
@@ -16,10 +24,19 @@ public class Customer {
     private ShoppingCart shoppingCart;
     private List<PurchaseRecord> purchaseHistory;
     private List<Notification> notifications;
+    private List<BankAccount> bankAccount;
+    private List<CreditCard> creditCard;
+    private List<PayMe> payMe;
+
     private static Scanner userInput = new Scanner(System.in);
+
     public Customer(String userName){
         this.userName = userName;
         this.shoppingCart = new ShoppingCart();
+        this.shoppingCart = new ShoppingCart();
+        this.bankAccount = new ArrayList<>();
+        this.creditCard = new ArrayList<>();
+        this.payMe = new ArrayList<>();
     }
     public void login(){
         System.out.println(userName + " logged in.\n");
@@ -47,6 +64,7 @@ public class Customer {
             try{
                 //if (IsHomepage) {
                     ItemInventory.showItems(page * 9, (page + 1) * 9);
+                    System.out.println();
                     //IsHomepage = false;
                 //}
                 System.out.println("Please enter an option number(an integer): ");
@@ -69,23 +87,29 @@ public class Customer {
                             //IsHomepage = true;
                             break;
                         case 3: // Search
-                            System.out.println("Search functionality to be implemented.");
+                            System.out.println("==========================");
+                            System.out.println("Search functionality Page");
                             this.searchMenu();
                             break;
                         case 4: // Shopping cart
-                            System.out.println("Shopping cart functionality to be implemented.");
+                            System.out.println("==========================");
+                            System.out.println("Shopping Cart Page");
                             this.shoppingCartMenu();
                             break;
                         case 5: // Account information
-                            System.out.println("Account information functionality to be implemented.");
-                            
+                            System.out.println("==========================");
+                            System.out.println("Account Information Page");
+                            this.accountinformationMenu();
                             break;
                         case 6: // Purchasing history
-                            System.out.println("Purchasing history functionality to be implemented.");
-
+                            System.out.println("==========================");
+                            System.out.println("Purchasing History Page");
+                            this.purchasingHistoryMenu();
                             break;
                         case 7: // Notification
-                            System.out.println("Notification functionality to be implemented.");
+                            System.out.println("==========================");
+                            System.out.println("Notification Page");
+                            this.notificationMenu();
                             break;
                         case 8: // Log out
                             this.logout();
@@ -118,12 +142,15 @@ public class Customer {
                 switch (choice) {
                     case 1:
                         searchByName();
+                        askAddToCart();
                         break; // Exit the method
                     case 2:
                         searchByCode();
+                        askAddToCart();
                         break; // Exit the method
                     case 3:
                         searchByCategory();
+                        askAddToCart();
                         break;
                     case 4:
                         return;
@@ -137,6 +164,75 @@ public class Customer {
             }
         }
     }
+
+    private void askAddToCart(){
+        while(true){
+            System.out.println("--------------------------");
+            System.out.println("Option 1: Add an item to the shopping cart");
+            System.out.println("Option 2: Back to Search Menu");
+            System.out.println("--------------------------");
+            System.out.print("Please enter an option number(an integer): ");
+
+            try{
+                int c = userInput.nextInt();
+                userInput.nextLine(); // Clear buffer
+
+                if (c == 1) {
+                    System.out.print("Please enter item code(an integer): ");
+                    try{
+                        int itemCode = userInput.nextInt();
+                        Item target = ItemInventory.searchByCode(itemCode);
+
+                        if (target == null){
+                            System.out.println("Item not found. Please try again.");
+                            continue; // Ask again instead of returning
+                        }
+
+                        System.out.print("Please enter quantity(an integer): ");
+                        int qty = userInput.nextInt();
+                        userInput.nextLine(); // Clear buffer
+
+                        if(qty <= 0){
+                            System.out.println("Quantity must be positive. Please try again.");
+                            continue;
+                        }
+
+                        System.out.print("Confirm addition?(y/n): ");
+                        char confirm = userInput.next().charAt(0);
+                        userInput.nextLine(); // Clear buffer
+
+                        if (confirm == 'y' || confirm == 'Y') {
+                            this.shoppingCart.addItem(target, qty);
+                            System.out.println("Item added to cart successfully!");
+                            System.out.println("==========================");
+                            return; // Exit after successful addition
+                        } else {
+                            System.out.println("Addition cancelled.");
+                            return; // Exit on cancellation
+                        }
+
+                    } catch (InputMismatchException e){
+                        System.out.println("Wrong input, please enter an integer.\n");
+                        userInput.nextLine(); // Clear buffer
+                        // Continue loop to ask again
+                    }
+
+                } else if(c == 2){
+                    return; // Exit to search menu
+
+                } else{
+                    System.out.println("Invalid option, please enter 1 or 2.\n");
+                    // Continue loop
+                }
+
+            } catch (InputMismatchException e){
+                System.out.println("Wrong input, please enter an integer.\n");
+                userInput.nextLine(); // Clear buffer
+                // Continue loop
+            }
+        }
+    }
+    
     private void searchByName(){
         System.out.println("Please enter item name:");
         List<Item> target = ItemInventory.searchByName(userInput.next());
@@ -145,6 +241,7 @@ public class Customer {
             System.out.println(target.get(i).getDetails());
         }
     }
+
     private void searchByCode(){
         System.out.println("Please enter item code:");
         try{
@@ -157,6 +254,7 @@ public class Customer {
         }
             
     }
+
     private void searchByCategory(){
         System.out.println("Please select item Category:");
         List<String> allCat = ItemInventory.getAllCategory();
@@ -195,7 +293,7 @@ public class Customer {
             if(this.shoppingCart.isEmpty()){
                 System.out.println("The Shopping Cart is empty.");
             }
-            this.shoppingCart.viewCart();
+            this.shoppingCart.DisplayCart();
             System.out.println("Total: $"+this.shoppingCart.calculateTotal());
             System.out.println("--------------------------");
             System.out.println("Option: 1 Checkout");
@@ -243,9 +341,390 @@ public class Customer {
             }
         }
     }
+
+    private void purchasingHistoryMenu(){
+        if(purchaseHistory == null || purchaseHistory.isEmpty()){
+            System.out.println("No purchase history.");
+        } else {
+            for(PurchaseRecord record : purchaseHistory){
+                System.out.println(record.getDetails());
+            }
+        }
+    }
+
+    private void accountinformationMenu(){
+        while(true){
+            System.out.println("\n=== Account Information ===");
+            System.out.println("Username: " + this.userName);
+            System.out.println("\nLinked Payment Methods:");
+            System.out.println("--------------------------");
+        
+            // Display all linked payment methods
+            if(!this.bankAccount.isEmpty()){
+                for(int i = 0; i < this.bankAccount.size(); i++){
+                    System.out.println((i+1) + ". Bank Account | Account ID: " + 
+                        this.bankAccount.get(i).getAccountId());
+                }
+            }
+            if(!this.creditCard.isEmpty()){
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/yy");
+                for(int i = 0; i < this.creditCard.size(); i++){
+                System.out.println((i+1) + ". Credit Card | Card Number: " +
+                    this.creditCard.get(i).getCardNumber() +
+                    " | Expiry Date: " + sdf.format(this.creditCard.get(i).getExpiryDate()));
+                }
+            }
+            if(!this.payMe.isEmpty()){
+                for(int i = 0; i < this.payMe.size(); i++){
+                    System.out.println((i+1) + ". PayMe | Account ID: " + 
+                        this.payMe.get(i).getAccountId());
+                }
+            }
+        
+            if(this.bankAccount.isEmpty() && this.creditCard.isEmpty() && this.payMe.isEmpty()){
+                System.out.println("No payment methods linked.");
+            }
+        
+            System.out.println("--------------------------");
+            System.out.println("Option: 1 Add a payment method");
+            System.out.println("Option: 2 Delete a payment method");
+            System.out.println("Option: 3 Go Back to Home Page");
+            System.out.println("Please enter an option number(an integer):");
+        
+            try{
+                int choice = userInput.nextInt();
+                userInput.nextLine(); // Clear buffer
+            
+                switch(choice){
+                    case 1:
+                        addPaymentMethod();
+                        break;
+                    case 2:
+                        deletePaymentMethod();
+                        break;
+                    case 3:
+                        return; // Exit to home menu
+                    default:
+                        System.out.println("Invalid option. Please try again.");
+                        break;
+                }
+            } catch(InputMismatchException e){
+                System.out.println("Wrong input, please enter an integer.\n");
+                userInput.nextLine(); // Clear buffer
+            }
+        }
+    }
+
+    private void addPaymentMethod(){
+        System.out.println("\n=== Add Payment Method ===");
+        System.out.println("Select payment method type:");
+        System.out.println("1. Bank Account");
+        System.out.println("2. Credit Card");
+        System.out.println("3. PayMe");
+        System.out.println("4. Cancel");
+        System.out.println("--------------------------");
+        System.out.print("Please enter an option: ");
+        
+        try{
+            int choice = userInput.nextInt();
+            userInput.nextLine(); // Clear buffer
+            
+            switch(choice){
+                case 1:
+                    System.out.print("Enter Bank Account ID: ");
+                    String accountId = userInput.nextLine();
+                    for (BankAccount ba : this.bankAccount) {
+                        if (ba.getAccountId().equals(accountId)) {
+                            System.out.println("This Bank Account is already linked.");
+                            return;
+                        }
+                    }
+                    bankAccount.add(new BankAccount(accountId));
+                    System.out.println("Bank Account linked successfully!");
+                    break;
+                    
+                case 2:
+                    System.out.print("Enter Card Number: ");
+                    String cardNumber = userInput.nextLine();
+                    for (CreditCard cc : this.creditCard) {
+                        if (cc.getCardNumber().equals(cardNumber)) {
+                            System.out.println("This Credit Card is already linked.");
+                            return;
+                        }
+                    }
+
+                    System.out.print("Enter Expiry Date (MM/YY): ");
+                    String expiryInput = userInput.nextLine();
+                    Date expiryDate = null;
+                    try {
+                        // "MM/yy" is the correct pattern for a date like "10/27"
+                        SimpleDateFormat sdf = new SimpleDateFormat("MM/yy");
+                        // Parsing returns a Date with day set to 1 of that month
+                        expiryDate = sdf.parse(expiryInput);
+                        creditCard.add(new CreditCard(cardNumber, expiryDate));
+                        System.out.println("Credit Card linked successfully!");
+                    } catch (ParseException e) {
+                        System.out.println("Invalid date format. Please enter as MM/YY (e.g. 11/29).");
+                        // Optionally, ask for input again or just abort
+                    }
+
+                    creditCard.add(new CreditCard(cardNumber, expiryDate));
+                    System.out.println("Credit Card linked successfully!");
+                    break;
+                    
+                case 3:
+                    System.out.print("Enter PayMe Account ID: ");
+                    String payMeId = userInput.nextLine();
+                    for (PayMe pm : this.payMe) {
+                        if (pm.getAccountId().equals(payMeId)) {
+                            System.out.println("This PayMe account is already linked.");
+                            return;
+                        }
+                    }
+                    payMe.add(new PayMe(payMeId));
+                    System.out.println("PayMe linked successfully!");
+                    break;
+                    
+                case 4:
+                    return;
+                    
+                default:
+                    System.out.println("Invalid choice.");
+                    break;
+            }
+        } catch(InputMismatchException e){
+            System.out.println("Wrong input, please enter an integer.\n");
+            userInput.nextLine(); // Clear buffer
+        }
+    }
+    
+    
+    private void deletePaymentMethod(){
+        System.out.println("\n=== Delete Payment Method ===");
+    
+        if(this.bankAccount.isEmpty() && this.creditCard.isEmpty() && this.payMe.isEmpty()){
+            System.out.println("No payment methods to delete.");
+            return;
+        }
+
+        System.out.println("Select payment method to delete:");
+        int optionNum = 1;
+
+        // Display all bank accounts
+        for(int i = 0; i < this.bankAccount.size(); i++){
+            System.out.println(optionNum + ". Bank Account | Account ID: " + 
+                this.bankAccount.get(i).getAccountId());
+            optionNum++;
+        }
+
+        // Display all credit cards
+        for(int i = 0; i < this.creditCard.size(); i++){
+            System.out.println(optionNum + ". Credit Card | Card Number: " + 
+                this.creditCard.get(i).getCardNumber());
+            optionNum++;
+        }
+
+        // Display all PayMe accounts
+        for(int i = 0; i < this.payMe.size(); i++){
+            System.out.println(optionNum + ". PayMe | Account ID: " + 
+                this.payMe.get(i).getAccountId());
+            optionNum++;
+        }
+
+        System.out.println(optionNum + ". Cancel");
+        System.out.println("--------------------------");
+        System.out.print("Please enter an option: ");
+
+        try{
+            int choice = userInput.nextInt();
+            userInput.nextLine(); // Clear buffer
+
+            int currentOption = 1;
+
+            // Check bank accounts
+            for(int i = 0; i < this.bankAccount.size(); i++){
+                if(choice == currentOption){
+                    System.out.print("Confirm deletion? (y/n): ");
+                    String confirm = userInput.nextLine().toLowerCase();
+                    if(confirm.equals("y")){
+                        this.bankAccount.remove(i);
+                        System.out.println("Bank Account deleted successfully!");
+                    }
+                    return;
+                }
+                currentOption++;
+            }
+
+            // Check credit cards
+            for(int i = 0; i < this.creditCard.size(); i++){
+                if(choice == currentOption){
+                    System.out.print("Confirm deletion? (y/n): ");
+                    String confirm = userInput.nextLine().toLowerCase();
+                    if(confirm.equals("y")){
+                        this.creditCard.remove(i);
+                        System.out.println("Credit Card deleted successfully!");
+                    }
+                    return;
+                }
+                currentOption++;
+            }
+
+            // Check PayMe accounts
+            for(int i = 0; i < this.payMe.size(); i++){
+                if(choice == currentOption){
+                    System.out.print("Confirm deletion? (y/n): ");
+                    String confirm = userInput.nextLine().toLowerCase();
+                    if(confirm.equals("y")){
+                        this.payMe.remove(i);
+                        System.out.println("PayMe deleted successfully!");
+                    }
+                    return;
+                }
+                currentOption++;
+            }
+
+            if(choice == currentOption){
+                return; // Cancel
+            }
+
+            System.out.println("Invalid choice.");
+
+        } catch(InputMismatchException e){
+            System.out.println("Wrong input, please enter an integer.\n");
+            userInput.nextLine(); // Clear buffer
+        }
+
+    }
+
+    private void notificationMenu(){
+        if(notifications == null || notifications.isEmpty()){
+            System.out.println("No notifications.");
+        } else {
+            for(Notification noti : notifications){
+                System.out.println(noti.toString());
+            }
+        }
+    }
+
     private void checkout(){
-        System.out.println("Checkout function will soon available");
-        return;
+        if(this.shoppingCart.isEmpty()){
+            System.out.println("Cart is empty, cannot checkout.");
+            return;
+        }
+
+        System.out.println("\n=== Checkout ===");
+        this.shoppingCart.DisplayCart();
+        System.out.println("Total: $" + this.shoppingCart.calculateTotal());
+        System.out.println("================");
+
+        if(this.bankAccount.isEmpty() && this.creditCard.isEmpty() && this.payMe.isEmpty()){
+            System.out.println("NO PAYMENT METHODS LINKED. PLEASE ADD A PAYMENT METHOD FIRST.");
+            return;
+        }
+
+        System.out.println("Choose payment method:");
+        int optionNum = 1;
+        
+        // Display all available payment methods
+        for(int i = 0; i < this.bankAccount.size(); i++){
+            System.out.println(optionNum + ". Bank Account | ID: " + 
+                this.bankAccount.get(i).getAccountId());
+            optionNum++;
+        }
+
+        for(int i = 0; i < this.creditCard.size(); i++){
+            System.out.println(optionNum + ". Credit Card | Number: " + 
+                this.creditCard.get(i).getCardNumber());
+            optionNum++;
+        }
+
+        for(int i = 0; i < this.payMe.size(); i++){
+            System.out.println(optionNum + ". PayMe | ID: " + 
+                this.payMe.get(i).getAccountId());
+            optionNum++;
+        }
+        System.out.println(optionNum + ". Cancel");
+        System.out.print("--------------------------");
+
+        try{
+            int choice = userInput.nextInt();
+            userInput.nextLine(); // Clear buffer
+            PaymentMethod pm = null;
+            int currentOption = 1;
+
+            // Check bank accounts
+            for(int i = 0; i < this.bankAccount.size(); i++){
+                if(choice == currentOption){
+                    pm = this.bankAccount.get(i);
+                    break;
+                }
+                currentOption++;
+            }
+
+            // Check credit cards
+            if(pm == null){
+                for(int i = 0; i < this.creditCard.size(); i++){
+                    if(choice == currentOption){
+                        pm = this.creditCard.get(i);
+                        break;
+                    }
+                    currentOption++;
+                }
+            }
+
+            // Check PayMe
+            if(pm == null){
+                for(int i = 0; i < this.payMe.size(); i++){
+                    if(choice == currentOption){
+                        pm = this.payMe.get(i);
+                        break;
+                    }
+                    currentOption++;
+                }
+            }
+
+            if(choice == currentOption){
+                return; // Cancel
+            }
+
+            if(pm == null){
+                System.out.println("Invalid choice.");
+                return;
+            }
+
+            double total = this.shoppingCart.calculateTotal();
+
+            if(pm.pay(total)){
+                System.out.println("Payment successful!");
+                for(Item item : this.shoppingCart.getCartItems()) {
+                    PurchaseRecord record = new PurchaseRecord(
+                        purchaseHistory == null ? 1 : purchaseHistory.size() + 1, 
+                        item, new Date(), "Purchased");
+                    this.addPurchaseRecord(record);
+                }
+
+                if(this.notifications == null){
+                    this.notifications = new ArrayList<>();
+                }
+                this.notifications.add(
+                    new Notification(new Date(), "Purchase successful! Total: $" + total));
+
+                this.shoppingCart.clearCart();
+            } else {
+                System.out.println("Payment failed.");
+            }
+
+        } catch(InputMismatchException e){
+            System.out.println("Wrong input, please enter an integer.\n");
+            userInput.nextLine(); // Clear buffer
+        }
+    }
+
+    public void addPurchaseRecord(PurchaseRecord record){
+        if(this.purchaseHistory == null){
+            this.purchaseHistory = new ArrayList<>();
+        }
+        this.purchaseHistory.add(record);
     }
 
 }

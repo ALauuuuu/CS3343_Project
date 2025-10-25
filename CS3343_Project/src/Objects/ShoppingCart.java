@@ -3,6 +3,7 @@ package Objects;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -47,7 +48,7 @@ public class ShoppingCart {
     public void clearCart() {
         cartItems.clear();
     }
-    public void viewCart(){
+    public void DisplayCart(){
         int i = 1;
         for (Item item : cartItems.keySet()) {
             Integer qty = cartItems.get(item);
@@ -55,11 +56,11 @@ public class ShoppingCart {
             i++;
         }
     }
-    /*
-    public List<Item> viewCart() {
+
+    public List<Item> getCartItems() {
         return cartItems.keySet().stream().collect(Collectors.toList());
     }
-    */
+    
     public double calculateTotal() {
         return cartItems.entrySet().stream()
                 .mapToDouble(entry -> entry.getKey().getPrice() * entry.getValue())

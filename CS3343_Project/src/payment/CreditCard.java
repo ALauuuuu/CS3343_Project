@@ -11,6 +11,10 @@ public class CreditCard implements PaymentMethod {
         this.expiryDate = expiryDate;
     }
 
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
     public Date getExpiryDate() {
         return expiryDate;
     }

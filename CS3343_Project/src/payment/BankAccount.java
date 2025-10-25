@@ -18,4 +18,8 @@ public class BankAccount implements PaymentMethod {
         System.out.println("Refunded " + amount + " to Bank Account " + accountId);
         return true;
     }
+
+    public String getAccountId() {
+        return accountId;
+    }
 }

@@ -37,10 +37,6 @@ public class ItemInventory {
         }
     }
 
-    public static Item findItemByCode(int itemCode) {
-        return instance.items.stream().filter(item -> item.getItemCode() == itemCode).findFirst().orElse(null);
-    }
-
     public static void showItems(int start, int end) {
         for (int i = start; i < end && i < instance.items.size(); i++) {
             Item item = instance.items.get(i);
@@ -74,8 +70,8 @@ public class ItemInventory {
         return output;
     }
 
-    public static Item searchByCode(int code) {
-        return findItemByCode(code);
+    public static Item searchByCode(int itemCode) {
+        return instance.items.stream().filter(item -> item.getItemCode() == itemCode).findFirst().orElse(null);
     }
 
     public static List<Item> searchByCategory(String category) {

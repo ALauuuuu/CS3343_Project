@@ -6,9 +6,9 @@ public class Notification {
     private String message;
     private Date date;
 
-    public Notification(String message, Date date) {
-        this.message = message;
+    public Notification(Date date, String message) {
         this.date = date;
+        this.message = message;
     }
 
     public String getMessage() {
@@ -17,5 +17,9 @@ public class Notification {
 
     public Date getDate() {
         return date;
+    }
+
+    public String toString() {
+        return "Date: " + date + ", Message: " + message;
     }
 }
