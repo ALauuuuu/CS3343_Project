@@ -1,6 +1,10 @@
 package User;
 
 import java.io.InputStream;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -22,6 +26,11 @@ public class Customer {
     private List<PurchaseRecord> purchaseHistory;
     private List<Notification> notifications;
     private static Scanner userInput = null;
+    private List<BankAccount> bankAccount;
+    private List<CreditCard> creditCard;
+    private List<PayMe> payMe;
+
+
     public static void setInputStream(InputStream in) {
         if (in == null) {
             userInput = null;
