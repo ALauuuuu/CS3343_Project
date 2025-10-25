@@ -1,5 +1,6 @@
 package User;
 
+import java.io.InputStream;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +17,14 @@ public class Customer {
     private ShoppingCart shoppingCart;
     private List<PurchaseRecord> purchaseHistory;
     private List<Notification> notifications;
-    private static Scanner userInput = new Scanner(System.in);
+    private static Scanner userInput = null;
+    public static void setInputStream(InputStream in) {
+        if (in == null) {
+            userInput = null;
+            return;
+        }
+        userInput = new Scanner(in);
+    }
     public Customer(String userName){
         this.userName = userName;
         this.shoppingCart = new ShoppingCart();
@@ -29,6 +37,9 @@ public class Customer {
         System.out.println(userName + " logged out.");
     }
     private void homeMenu(){
+        if (userInput == null) {
+            userInput = new Scanner(System.in);
+        }
         boolean loggedIn = true;
         //boolean IsHomepage = true;
         int page = 0;

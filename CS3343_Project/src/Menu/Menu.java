@@ -2,13 +2,26 @@ package Menu;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.io.InputStream;
 
 import User.Customer;
 import User.Admin;
 
 public class Menu {
-    private static Scanner userInput = new Scanner(System.in);
+    private static Scanner userInput = null;
+    public static void setInputStream(InputStream in) {
+        if (in == null) {
+            userInput = null;
+            return;
+        }
+        userInput = new Scanner(in);
+    }
+
     public static void loginPage(){
+        if (userInput == null) {
+            userInput = new Scanner(System.in);
+        }
+
         String userName;
         Admin currentAdmin = new Admin(null);
         Customer currentCustomer = new Customer(null);
