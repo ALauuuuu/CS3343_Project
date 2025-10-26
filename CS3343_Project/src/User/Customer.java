@@ -217,8 +217,12 @@ public class Customer {
                         userInput.nextLine(); // Clear buffer
 
                         if (confirm == 'y' || confirm == 'Y') {
-                            this.shoppingCart.addItem(target, qty);
-                            System.out.println("Item added to cart successfully!");
+                            boolean added = this.shoppingCart.addItem(target, qty);
+                            if(added){
+                                System.out.println("Item added to cart successfully!");
+                            }else{
+                                System.out.println("Addition cancelled.");
+                            }
                             System.out.println("==========================");
                             return; // Exit after successful addition
                         } else {
@@ -728,6 +732,7 @@ public class Customer {
                         purchaseHistory == null ? 1 : purchaseHistory.size() + 1, 
                         item, new Date(), "Purchased");
                     this.addPurchaseRecord(record);
+                    item.updateQuantity(item.getQuantity()-this.shoppingCart.getCartItemQuantity(item));
                 }
 
                 if(this.notifications == null){

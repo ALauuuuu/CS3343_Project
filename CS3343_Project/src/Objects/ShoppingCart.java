@@ -24,10 +24,14 @@ public class ShoppingCart {
         ));
         cartItems = sorted;
     }
-    public void addItem(Item item, int quantity) {
+    public boolean addItem(Item item, int quantity) {
+        if(item.getQuantity()< quantity + cartItems.getOrDefault(item, 0)){
+            System.out.println("Stock is not enough.");
+            return false;
+        }
         cartItems.put(item, cartItems.getOrDefault(item, 0) + quantity);
         sortCartByItemCode();
-        return;
+        return true;
     }
 
     public boolean removeItem(Item item) {
@@ -39,10 +43,15 @@ public class ShoppingCart {
         return false;
     }
 
-    public void modifyItem(Item item, int quantity){
+    public boolean modifyItem(Item item, int quantity){
+        if(item.getQuantity()< quantity){
+            System.out.println("Stock is not enough.");
+            return false;
+        }
         this.cartItems.remove(item);
         this.cartItems.put(item, cartItems.getOrDefault(item, 0) + quantity);
         this.sortCartByItemCode();
+        return true;
     }
 
     public void clearCart() {
@@ -59,6 +68,10 @@ public class ShoppingCart {
 
     public List<Item> getCartItems() {
         return cartItems.keySet().stream().collect(Collectors.toList());
+    }
+
+    public int getCartItemQuantity(Item target) {
+        return this.cartItems.get(target);
     }
     
     public double calculateTotal() {
