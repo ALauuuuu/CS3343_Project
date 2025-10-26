@@ -676,40 +676,40 @@ public class Customer {
             int choice = userInput.nextInt();
             userInput.nextLine(); // Clear buffer
             PaymentMethod pm = null;
-            int currentOption = 1;
+            int currentOption = 0;
 
             // Check bank accounts
             for(int i = 0; i < this.bankAccount.size(); i++){
+                currentOption++;
                 if(choice == currentOption){
                     pm = this.bankAccount.get(i);
                     break;
                 }
-                currentOption++;
             }
 
             // Check credit cards
             if(pm == null){
                 for(int i = 0; i < this.creditCard.size(); i++){
+                    currentOption++;
                     if(choice == currentOption){
                         pm = this.creditCard.get(i);
                         break;
                     }
-                    currentOption++;
                 }
             }
 
             // Check PayMe
             if(pm == null){
                 for(int i = 0; i < this.payMe.size(); i++){
+                    currentOption++;
                     if(choice == currentOption){
                         pm = this.payMe.get(i);
                         break;
                     }
-                    currentOption++;
                 }
             }
 
-            if(choice == currentOption){
+            if(choice == currentOption + 1){
                 System.out.println("Checkout canceled.");
                 return; // Cancel
             }
