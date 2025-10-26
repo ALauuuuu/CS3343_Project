@@ -17,6 +17,12 @@ public class CustomerTest {
 
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 	private final PrintStream originalOut = System.out;
+
+	@BeforeEach
+	public void setUp() {
+		System.setOut(new PrintStream(outContent));
+		Main.initializeInventory();
+	}
 	
 	@Test
 	public void searchByNameSuccessfully() {
