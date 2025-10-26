@@ -95,7 +95,7 @@ public class CustomerTest {
 				Menu.loginPage();
 				String output = outContent.toString();
 			//	assertEquals(true, );
-			// error occured
+			//  error
 				
 				Menu.setInputStream(null);
 				Customer.setInputStream(null);
@@ -143,22 +143,22 @@ public class CustomerTest {
 
 	@Test
 	public void addItemToCartSuccessfully() {
-		String input = "1\nMeki\n3\n";
-		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
-		Menu.setInputStream(testInput);
-
-		input = "3\n1\nToys\n1\n1\n2\ny\n4\n8\n";
-		testInput = new ByteArrayInputStream(input.getBytes());
-		Customer.setInputStream(testInput);
-
-		Menu.loginPage();
+				String input = "1\nMeki\n3\n";
+				ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
+				Menu.setInputStream(testInput);
 		
-		String output = outContent.toString();
+				input = "3\n1\nToys\n1\n1\n2\ny\n4\n8\n";
+				testInput = new ByteArrayInputStream(input.getBytes());
+				Customer.setInputStream(testInput);
 		
-		assertTrue(output.contains("Item added to cart successfully"));
-		
-		Menu.setInputStream(null);
-		Customer.setInputStream(null);
+				Menu.loginPage();
+				
+				String output = outContent.toString();
+				
+				assertTrue(output.contains("Item added to cart successfully"));
+				
+				Menu.setInputStream(null);
+				Customer.setInputStream(null);
 	}
 
 }
