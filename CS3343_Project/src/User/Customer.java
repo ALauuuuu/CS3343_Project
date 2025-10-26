@@ -447,10 +447,10 @@ public class Customer {
     private void addPaymentMethod(){
         System.out.println("\n=== Add Payment Method ===");
         System.out.println("Select payment method type:");
-        System.out.println("1. Bank Account");
-        System.out.println("2. Credit Card");
-        System.out.println("3. PayMe");
-        System.out.println("4. Cancel");
+        System.out.println("Option: 1 Bank Account");
+        System.out.println("Option: 2 Credit Card");
+        System.out.println("Option: 3 PayMe");
+        System.out.println("Option: 4 Cancel");
         System.out.println("--------------------------");
         System.out.print("Please enter an option: ");
         
@@ -490,8 +490,6 @@ public class Customer {
                         SimpleDateFormat sdf = new SimpleDateFormat("MM/yy");
                         // Parsing returns a Date with day set to 1 of that month
                         expiryDate = sdf.parse(expiryInput);
-                        creditCard.add(new CreditCard(cardNumber, expiryDate));
-                        System.out.println("Credit Card linked successfully!");
                     } catch (ParseException e) {
                         System.out.println("Invalid date format. Please enter as MM/YY (e.g. 11/29).");
                         // Optionally, ask for input again or just abort
@@ -646,7 +644,7 @@ public class Customer {
         System.out.println("================");
 
         if(this.bankAccount.isEmpty() && this.creditCard.isEmpty() && this.payMe.isEmpty()){
-            System.out.println("NO PAYMENT METHODS LINKED. PLEASE ADD A PAYMENT METHOD FIRST.");
+            System.out.println("NO PAYMENT METHODS LINKED. PLEASE ADD A PAYMENT METHOD IN ACCOUNT INFORMATION.");
             return;
         }
 
@@ -655,24 +653,24 @@ public class Customer {
         
         // Display all available payment methods
         for(int i = 0; i < this.bankAccount.size(); i++){
-            System.out.println(optionNum + ". Bank Account | ID: " + 
+            System.out.println("Option: " + optionNum + " | Bank Account | ID: " + 
                 this.bankAccount.get(i).getAccountId());
             optionNum++;
         }
 
         for(int i = 0; i < this.creditCard.size(); i++){
-            System.out.println(optionNum + ". Credit Card | Number: " + 
+            System.out.println("Option: " + optionNum + " | Credit Card | Number: " + 
                 this.creditCard.get(i).getCardNumber());
             optionNum++;
         }
 
         for(int i = 0; i < this.payMe.size(); i++){
-            System.out.println(optionNum + ". PayMe | ID: " + 
+            System.out.println("Option: " + optionNum + " | PayMe | ID: " + 
                 this.payMe.get(i).getAccountId());
             optionNum++;
         }
-        System.out.println(optionNum + ". Cancel");
-        System.out.print("--------------------------");
+        System.out.println("Option: " + optionNum + " | Cancel");
+        System.out.println("--------------------------");
 
         try{
             int choice = userInput.nextInt();
@@ -712,6 +710,7 @@ public class Customer {
             }
 
             if(choice == currentOption){
+                System.out.println("Checkout canceled.");
                 return; // Cancel
             }
 
