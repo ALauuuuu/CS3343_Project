@@ -83,7 +83,22 @@ public class CustomerTest {
 	
 	@Test
 	public void searchByCatSuccessfully() {
-
+				String input = "1\nMeki\n3\n";
+				ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
+				Menu.setInputStream(testInput);
+				
+				input = "3\n3\n1\n2\n4\n8\n";
+				testInput = new ByteArrayInputStream(input.getBytes());
+				Customer.setInputStream(testInput);
+				
+				Menu.loginPage();
+				
+				String output = outContent.toString();
+				assertEquals(true, output.contains("item(s) found"));
+				assertEquals(false, output.contains("0 item(s) found"));
+				
+				Menu.setInputStream(null);
+				Customer.setInputStream(null);
 	}
 	
 	@Test
