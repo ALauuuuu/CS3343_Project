@@ -103,7 +103,21 @@ public class CustomerTest {
 	
 	@Test
 	public void searchByCatUnsuccessfully() {
-
+				String input = "1\nMeki\n3\n";
+				ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
+				Menu.setInputStream(testInput);
+		
+				input = "3\n3\n999\n1\n2\n4\n8\n";
+				testInput = new ByteArrayInputStream(input.getBytes());
+				Customer.setInputStream(testInput);
+				
+				Menu.loginPage();
+				
+				String output = outContent.toString();
+				assertEquals(true, output.contains("Invalid option, please try again!") || output.contains("Wrong input, please enter an integer."));
+				
+				Menu.setInputStream(null);
+				Customer.setInputStream(null);
 	}
 
 }
