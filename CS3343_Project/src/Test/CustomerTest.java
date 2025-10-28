@@ -39,7 +39,8 @@ public class CustomerTest {
 		        
 		        Menu.setInputStream(null);
 		        Customer.setInputStream(null);
-	//	        assertEquals(true,);
+				assertEquals(true, output.contains("item(s) found"));
+				assertEquals(true, output.contains("Toys"));
 
 	}
 	
@@ -75,7 +76,7 @@ public class CustomerTest {
 				Menu.loginPage();
 				
 				String output = outContent.toString();
-				assertEquals(true, output.contains("Item code:5") || output.contains("Pen"));
+				assertEquals(true, output.contains("Pen"));
 				
 				Menu.setInputStream(null);
 				Customer.setInputStream(null);
@@ -88,14 +89,14 @@ public class CustomerTest {
 				ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
 				Menu.setInputStream(testInput);
 
+				// first search with invalid code 999, then retry with code 3.
 				input = "3\n2\n999\n3\n2\n4\n8\n";
 				testInput = new ByteArrayInputStream(input.getBytes());
 				Customer.setInputStream(testInput);
 				
 				Menu.loginPage();
 				String output = outContent.toString();
-			//	assertEquals(true, );
-			//  error
+				assertEquals(true, output.contains("Shampoo"));
 				
 				Menu.setInputStream(null);
 				Customer.setInputStream(null);
