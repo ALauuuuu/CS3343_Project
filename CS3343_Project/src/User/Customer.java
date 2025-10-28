@@ -266,21 +266,24 @@ public class Customer {
         return true;
     }
 
-    private boolean searchByCode(){
-        System.out.println("Please enter item code:");
-        try{
-            Item target = ItemInventory.searchByCode(userInput.nextInt());
-            if (target == null){
-                System.out.println("No item found.");
-                return false;
+    private void searchByCode(){
+        while (true) {
+            System.out.println("Please enter item code:");
+            try{
+                int code = userInput.nextInt();
+                Item target = ItemInventory.searchByCode(code);
+                
+                if (target == null) {
+                    System.out.println("Item not found. Please try again.");
+                } else {
+                    System.out.println(target.getDetails());
+                    return; 
+                }
+            } catch (InputMismatchException e){
+                System.out.println("Wrong input, please enter an integer.\n");
+                userInput.nextLine(); //clear buffer
             }
-            System.out.println(target.getDetails());
-        } catch (InputMismatchException e){
-            System.out.println("Wrong input, please enter an integer.\n");
-            userInput.nextLine(); //clear buffer
-            searchByCode();
         }
-        return true;
     }
 
     private boolean searchByCategory(){
