@@ -1,5 +1,6 @@
 package User;
 
+import java.io.InputStream;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -9,9 +10,17 @@ import Objects.Notification;
 import Objects.Item;
 
 public class Admin {
-    private static Scanner userInput = new Scanner(System.in);
+    private static Scanner userInput = null;
     private String userName;
     private NotificationManager notificationManager;
+
+    public static void setInputStream(InputStream in) {
+        if (in == null) {
+            userInput = null;
+            return;
+        }
+        userInput = new Scanner(in);
+    }
 
     public Admin(String userName){
         this.userName = userName;
@@ -26,6 +35,9 @@ public class Admin {
         System.out.println(userName + " logged out.");
     }
     private void homeMenu(){
+        if (userInput == null) {
+            userInput = new Scanner(System.in);
+        }
         boolean loggedIn = true;
         while (loggedIn) {
             System.out.println("\nOnline Shopping > Admin Page");

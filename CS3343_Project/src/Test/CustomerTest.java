@@ -34,13 +34,15 @@ public class CustomerTest {
 				testInput = new ByteArrayInputStream(input.getBytes());
 		        Customer.setInputStream(testInput);
 
-		        Main.initializeInventory();
 		        Menu.loginPage();
 		        
-		        Menu.setInputStream(null);
-		        Customer.setInputStream(null);
+				String output = outContent.toString();
 				assertEquals(true, output.contains("item(s) found"));
 				assertEquals(true, output.contains("Toys"));
+				
+			    Menu.setInputStream(null);
+		        Customer.setInputStream(null);
+				
 
 	}
 	
