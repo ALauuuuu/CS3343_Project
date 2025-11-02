@@ -13,6 +13,7 @@ import Instances.ItemInventory;
 import Objects.Item;
 import Objects.Notification;
 import Objects.PurchaseRecord;
+import Objects.Review;
 import Objects.ShoppingCart;
 import Payment.BankAccount;
 import Payment.CreditCard;
@@ -22,6 +23,7 @@ import Payment.PaymentMethod;
 
 public class Customer {
     private String userName;
+    private int userId;
     private ShoppingCart shoppingCart;
     private List<PurchaseRecord> purchaseHistory;
     private List<Notification> notifications;
@@ -41,6 +43,7 @@ public class Customer {
     
     public Customer(String userName){
         this.userName = userName;
+        this.userId = 12345; //test
         this.shoppingCart = new ShoppingCart();
         this.shoppingCart = new ShoppingCart();
         this.bankAccount = new ArrayList<>();
@@ -149,7 +152,8 @@ public class Customer {
             System.out.println("Option: 1 Search By Name ");
             System.out.println("Option: 2 Search By Code ");
             System.out.println("Option: 3 Search By Category ");
-            System.out.println("Option: 4 Back to Home Page ");
+            System.out.println("Option: 4 Check item details ");
+            System.out.println("Option: 5 Back to Home Page ");
             System.out.println("--------------------------");
             System.out.println("Please enter an option number(an integer):");
             try {
@@ -168,6 +172,9 @@ public class Customer {
                         askAddToCart();
                         break;
                     case 4:
+                        checkItemDetails();
+                        break;
+                    case 5:
                         return;
                     default:
                         System.out.println("Invalid option, please try again.\n");
@@ -316,6 +323,72 @@ public class Customer {
         return true;
     }
 
+    private void checkItemDetails(){
+        while (true) {
+            System.out.println("Please enter item code:");
+            try{
+                int code = userInput.nextInt();
+                userInput.nextLine();
+                Item target = ItemInventory.searchByCode(code);
+                if (target == null) {
+                    System.out.println("Item not found. Please try again.");
+                    checkItemDetails();
+                    return;
+                }
+                System.out.println(target.getDetails());
+                System.out.println("--------------------------");
+                target.showReviews();
+                System.out.println("--------------------------");
+                System.out.println("Option: 1 Add one to shopping cart");
+                System.out.println("Option: 2 Back to Search Menu");
+                if(target.getCanReview())
+                    System.out.println("Option: 3 Leave a review");
+                System.out.println("--------------------------");
+                System.out.println("Please enter an option number(an integer):");
+                int c = userInput.nextInt();
+                userInput.nextLine(); // Clear buffer
+                if (c == 1) {
+                    this.shoppingCart.addItem(target, 1);
+                    return; // Exit to search menu
+                } else if(c == 2){
+                    return; // Exit to search menu
+                } else if(c == 3 && target.getCanReview() == true){
+                    createReview(target);
+                    return; // Exit to search menu
+                }else{
+                    System.out.println("Invalid option, please enter 1 or 2.\n");
+                    // Continue loop
+                }
+
+            } catch (InputMismatchException e){
+                System.out.println("Wrong input, please enter an integer.\n");
+                userInput.nextLine(); //clear buffer
+            }
+        }
+         
+    }
+
+    private void createReview(Item target){
+        while (true) {
+            try {
+                System.out.println("Please enter rating (1 to 5)");
+                int rating = userInput.nextInt();
+                userInput.nextLine(); //clear buffer
+                if(rating<1||rating>5){
+                    throw new InputMismatchException();
+                }
+                System.out.println("Please enter comment");
+                String comment = userInput.next();
+                userInput.nextLine();
+                target.addReview(new Review(111,this.userId,rating,comment,new Date()));
+                return;
+            } catch (InputMismatchException e) {
+                System.out.println("Wrong input, please enter an integer.\n");
+                userInput.nextLine(); //clear buffer
+            }
+        }
+    }
+
     private void shoppingCartMenu(){
         //testing
         this.shoppingCart.addItem(ItemInventory.searchByCode(1), 1);
@@ -379,13 +452,56 @@ public class Customer {
     }
 
     private void purchasingHistoryMenu(){
-        if(purchaseHistory == null || purchaseHistory.isEmpty()){
-            System.out.println("No purchase history.");
-        } else {
-            for(PurchaseRecord record : purchaseHistory){
-                System.out.println(record.getDetails());
+        while(true){
+            if(purchaseHistory == null || purchaseHistory.isEmpty()){
+                System.out.println("No purchase history.");
+                return;
+            } else {
+                int i = 1;
+                for(PurchaseRecord record : purchaseHistory){
+                    System.out.println(i + ": " + record.getDetails());
+                    i++;
+                }
+                System.out.println("--------------------------");
+                System.out.println("Option: 1 Refund ");
+                System.out.println("Option: 2 Back to Home Page ");
+                System.out.println("--------------------------");
+                try {
+                    int choice = userInput.nextInt();
+                    switch (choice) {
+                        case 1:
+                            refund();
+                            break; // Exit the method
+                        case 2:
+                            return;
+                        default:
+                            System.out.println("Invalid option, please try again.\n");
+                            break; // Continue the loop
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Wrong input, please enter an integer.\n");
+                    userInput.nextLine(); //clear buffer
+                }
             }
         }
+    }
+
+    private void refund(){
+        System.out.println("--------------------------");
+        userInput.nextLine();
+        System.out.println("Please enter target purchase number: ");
+        try {
+            int choice = userInput.nextInt();
+            if(choice<1 || choice>purchaseHistory.size()){
+                throw new InputMismatchException();
+            }
+            PurchaseRecord target = purchaseHistory.get(choice-1);
+            target.setStatus("Refunded");
+        } catch (InputMismatchException e) {
+            System.out.println("Wrong input, please enter an correct integer.\n");
+            userInput.nextLine(); //clear buffer
+        }
+        
     }
 
     private void accountinformationMenu(){
@@ -743,7 +859,8 @@ public class Customer {
                 }
                 this.notifications.add(
                     new Notification(new Date(), "Purchase successful! Total: $" + total));
-
+                for(Item item : this.shoppingCart.getCartItems())
+                    item.setCanReview(true);
                 this.shoppingCart.clearCart();
             } else {
                 System.out.println("Payment failed.");

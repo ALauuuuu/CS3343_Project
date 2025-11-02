@@ -12,6 +12,7 @@ public class Item {
     private int quantity;
     private double averageRating;
     private List<Review> reviews;
+    private boolean canReview = false;
 
     public Item(int itemCode, String name, double price, String category, int quantity) {
         this.itemCode = itemCode;
@@ -19,11 +20,25 @@ public class Item {
         this.price = price;
         this.category = category;
         this.quantity = quantity;
+        this.reviews = new ArrayList<Review>();
     }
  
     public String getDetails() {
         return "Item code:" + itemCode + "\tItem name: " + name + "\tPrice: $" + price +
                "\nCategory: " + category + "\tAverage rating: " + averageRating + "/ 5.0\tQuantity: " + quantity;
+    }
+
+    public void showReviews(){
+        if(this.reviews.isEmpty()){
+            System.out.println("No reviews.");
+            return;
+        }
+        int reviewsToPrint = 3;
+        if(reviews.size()<3)
+            reviewsToPrint = reviews.size();
+        for(int i = 0; i< reviewsToPrint; i++){
+            System.out.println(reviews.get(reviews.size()-1-i).getReviewDetails());
+        }
     }
 
     public boolean updateQuantity(int updatedQuantity) {
@@ -98,4 +113,11 @@ public class Item {
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
+
+    public void setCanReview(boolean enabled){
+        this.canReview = enabled;
+    }
+    public boolean getCanReview(){
+        return this.canReview;
+    } 
 }
