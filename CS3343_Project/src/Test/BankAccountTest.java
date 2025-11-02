@@ -19,7 +19,7 @@ public class BankAccountTest {
     @BeforeEach
     public void setUp() {
         System.setOut(new PrintStream(outContent));
-        bankAccount = new BankAccount("BA123456");
+        bankAccount = new BankAccount("MEKI1234");
     }
 
     @AfterEach
@@ -29,7 +29,7 @@ public class BankAccountTest {
 
     @Test
     public void testConstructorAndGetAccountId() {
-        assertEquals("BA123456", bankAccount.getAccountId());
+        assertEquals("MEKI1234", bankAccount.getAccountId());
     }
 
     @Test
@@ -42,7 +42,7 @@ public class BankAccountTest {
     public void testPayPrintsCorrectMessage() {
         bankAccount.pay(100.50);
         String output = outContent.toString();
-        assertTrue(output.contains("Paid 100.5 using Bank Account BA123456"));
+        assertTrue(output.contains("Paid 100.5 using Bank Account MEKI1234"));
     }
 
     @Test
@@ -50,7 +50,7 @@ public class BankAccountTest {
         boolean result = bankAccount.pay(0.0);
         assertTrue(result);
         String output = outContent.toString();
-        assertTrue(output.contains("Paid 0.0 using Bank Account BA123456"));
+        assertTrue(output.contains("Paid 0.0 using Bank Account MEKI1234"));
     }
 
     @Test
@@ -58,7 +58,7 @@ public class BankAccountTest {
         boolean result = bankAccount.pay(999999.99);
         assertTrue(result);
         String output = outContent.toString();
-        assertTrue(output.contains("Paid 999999.99 using Bank Account BA123456"));
+        assertTrue(output.contains("Paid 999999.99 using Bank Account MEKI1234"));
     }
 
     @Test
@@ -71,7 +71,7 @@ public class BankAccountTest {
     public void testRefundPrintsCorrectMessage() {
         bankAccount.refund(50.25);
         String output = outContent.toString();
-        assertTrue(output.contains("Refunded 50.25 to Bank Account BA123456"));
+        assertTrue(output.contains("Refunded 50.25 to Bank Account MEKI1234"));
     }
 
     @Test
@@ -79,7 +79,7 @@ public class BankAccountTest {
         boolean result = bankAccount.refund(0.0);
         assertTrue(result);
         String output = outContent.toString();
-        assertTrue(output.contains("Refunded 0.0 to Bank Account BA123456"));
+        assertTrue(output.contains("Refunded 0.0 to Bank Account MEKI1234"));
     }
 
     @Test
@@ -87,8 +87,8 @@ public class BankAccountTest {
         bankAccount.pay(100.0);
         bankAccount.pay(200.0);
         String output = outContent.toString();
-        assertTrue(output.contains("Paid 100.0 using Bank Account BA123456"));
-        assertTrue(output.contains("Paid 200.0 using Bank Account BA123456"));
+        assertTrue(output.contains("Paid 100.0 using Bank Account MEKI1234"));
+        assertTrue(output.contains("Paid 200.0 using Bank Account MEKI1234"));
     }
 
     @Test
@@ -96,8 +96,8 @@ public class BankAccountTest {
         bankAccount.refund(50.0);
         bankAccount.refund(75.0);
         String output = outContent.toString();
-        assertTrue(output.contains("Refunded 50.0 to Bank Account BA123456"));
-        assertTrue(output.contains("Refunded 75.0 to Bank Account BA123456"));
+        assertTrue(output.contains("Refunded 50.0 to Bank Account MEKI1234"));
+        assertTrue(output.contains("Refunded 75.0 to Bank Account MEKI1234"));
     }
 
     @Test
@@ -105,8 +105,8 @@ public class BankAccountTest {
         bankAccount.pay(100.0);
         bankAccount.refund(50.0);
         String output = outContent.toString();
-        assertTrue(output.contains("Paid 100.0 using Bank Account BA123456"));
-        assertTrue(output.contains("Refunded 50.0 to Bank Account BA123456"));
+        assertTrue(output.contains("Paid 100.0 using Bank Account MEKI1234"));
+        assertTrue(output.contains("Refunded 50.0 to Bank Account MEKI1234"));
     }
 
     @Test
