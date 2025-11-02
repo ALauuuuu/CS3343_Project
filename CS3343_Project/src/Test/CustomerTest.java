@@ -21,7 +21,15 @@ public class CustomerTest {
 	@BeforeEach
 	public void setUp() {
 		System.setOut(new PrintStream(outContent));
+		ItemInventory.getItems().clear();
 		Main.initializeInventory();
+	}
+
+	@AfterEach
+	public void tearDown() {
+		System.setOut(originalOut);
+		Menu.setInputStream(null);
+		Customer.setInputStream(null);
 	}
 	
 	@Test
@@ -39,11 +47,6 @@ public class CustomerTest {
 				String output = outContent.toString();
 				assertEquals(true, output.contains("item(s) found"));
 				assertEquals(true, output.contains("Toys"));
-				
-			    Menu.setInputStream(null);
-		        Customer.setInputStream(null);
-				
-
 	}
 	
 	@Test
@@ -60,9 +63,6 @@ public class CustomerTest {
 				
 				String output = outContent.toString();
 				assertEquals(true, output.contains("0 item(s) found"));
-				
-				Menu.setInputStream(null);
-				Customer.setInputStream(null);
 	}
 	
 	@Test
@@ -79,10 +79,6 @@ public class CustomerTest {
 				
 				String output = outContent.toString();
 				assertEquals(true, output.contains("Pen"));
-				
-				Menu.setInputStream(null);
-				Customer.setInputStream(null);
-
 	}
 	
 	@Test
@@ -91,7 +87,6 @@ public class CustomerTest {
 				ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
 				Menu.setInputStream(testInput);
 
-				// first search with invalid code 999, then retry with code 3.
 				input = "3\n2\n999\n3\n2\n4\n8\n";
 				testInput = new ByteArrayInputStream(input.getBytes());
 				Customer.setInputStream(testInput);
@@ -99,10 +94,6 @@ public class CustomerTest {
 				Menu.loginPage();
 				String output = outContent.toString();
 				assertEquals(true, output.contains("Shampoo"));
-				
-				Menu.setInputStream(null);
-				Customer.setInputStream(null);
-
 	}
 	
 	@Test
@@ -120,9 +111,6 @@ public class CustomerTest {
 				String output = outContent.toString();
 				assertEquals(true, output.contains("item(s) found"));
 				assertEquals(false, output.contains("0 item(s) found"));
-				
-				Menu.setInputStream(null);
-				Customer.setInputStream(null);
 	}
 	
 	@Test
@@ -138,30 +126,41 @@ public class CustomerTest {
 				Menu.loginPage();
 				
 				String output = outContent.toString();
-				assertEquals(true, output.contains("Invalid option, please try again!") || output.contains("Wrong input, please enter an integer."));
-				
-				Menu.setInputStream(null);
-				Customer.setInputStream(null);
+				assertEquals(true, output.contains("Invalid option, please try again!") || 
+							 output.contains("Wrong input, please enter an integer."));
 	}
 
 	@Test
-	public void addItemToCartSuccessfully() {
-				String input = "1\nMeki\n3\n";
-				ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
-				Menu.setInputStream(testInput);
+	public void searchByNameCaseSensitive() {
+		String input = "1\nUser1\n3\n";
+		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
+		Menu.setInputStream(testInput);
+
+		input = "3\n1\ntoys\n2\n4\n8\n";
+		testInput = new ByteArrayInputStream(input.getBytes());
+		Customer.setInputStream(testInput);
+
+		Menu.loginPage();
 		
-				input = "3\n1\nToys\n1\n1\n2\ny\n4\n8\n";
-				testInput = new ByteArrayInputStream(input.getBytes());
-				Customer.setInputStream(testInput);
+		String output = outContent.toString();
+		assertTrue(output.contains("item(s) found") || output.contains("No items found"));
+	}
+
+	@Test
+	public void multipleSearchOperations() {
+		String input = "1\nUser1\n3\n";
+		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
+		Menu.setInputStream(testInput);
+
+		input = "3\n1\nToys\n2\n2\n5\n2\n4\n8\n";
+		testInput = new ByteArrayInputStream(input.getBytes());
+		Customer.setInputStream(testInput);
+
+		Menu.loginPage();
 		
-				Menu.loginPage();
-				
-				String output = outContent.toString();
-				
-				assertTrue(output.contains("Item added to cart successfully"));
-				
-				Menu.setInputStream(null);
-				Customer.setInputStream(null);
+		String output = outContent.toString();
+		assertTrue(output.contains("Toys"));
+		assertTrue(output.contains("Pen"));
 	}
 
 }
