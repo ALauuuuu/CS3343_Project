@@ -23,30 +23,30 @@ public class BankAccountTest {
     }
 
     @AfterEach
-    public void tearDown() {
+    public void Down() {
         System.setOut(originalOut);
     }
 
     @Test
-    public void testConstructorAndGetAccountId() {
+    public void ConstructorAndGetAccountId() {
         assertEquals("MEKI1234", bankAccount.getAccountId());
     }
 
     @Test
-    public void testPayReturnsTrue() {
+    public void PayReturnsTrue() {
         boolean result = bankAccount.pay(100.50);
         assertTrue(result);
     }
 
     @Test
-    public void testPayPrintsCorrectMessage() {
+    public void PayCorrectMessage() {
         bankAccount.pay(100.50);
         String output = outContent.toString();
         assertTrue(output.contains("Paid 100.5 using Bank Account MEKI1234"));
     }
 
     @Test
-    public void testPayWithZeroAmount() {
+    public void PayZeroAmount() {
         boolean result = bankAccount.pay(0.0);
         assertTrue(result);
         String output = outContent.toString();
@@ -54,7 +54,7 @@ public class BankAccountTest {
     }
 
     @Test
-    public void testPayWithLargeAmount() {
+    public void PayLargeAmount() {
         boolean result = bankAccount.pay(999999.99);
         assertTrue(result);
         String output = outContent.toString();
@@ -62,20 +62,20 @@ public class BankAccountTest {
     }
 
     @Test
-    public void testRefundReturnsTrue() {
+    public void RefundReturnsTrue() {
         boolean result = bankAccount.refund(50.25);
         assertTrue(result);
     }
 
     @Test
-    public void testRefundPrintsCorrectMessage() {
+    public void RefundCorrectMessage() {
         bankAccount.refund(50.25);
         String output = outContent.toString();
         assertTrue(output.contains("Refunded 50.25 to Bank Account MEKI1234"));
     }
 
     @Test
-    public void testRefundWithZeroAmount() {
+    public void RefundZeroAmount() {
         boolean result = bankAccount.refund(0.0);
         assertTrue(result);
         String output = outContent.toString();
@@ -83,7 +83,7 @@ public class BankAccountTest {
     }
 
     @Test
-    public void testMultiplePayments() {
+    public void MultiplePayments() {
         bankAccount.pay(100.0);
         bankAccount.pay(200.0);
         String output = outContent.toString();
@@ -92,7 +92,7 @@ public class BankAccountTest {
     }
 
     @Test
-    public void testMultipleRefunds() {
+    public void MultipleRefunds() {
         bankAccount.refund(50.0);
         bankAccount.refund(75.0);
         String output = outContent.toString();
@@ -101,7 +101,7 @@ public class BankAccountTest {
     }
 
     @Test
-    public void testPayAndRefund() {
+    public void PayAndRefund() {
         bankAccount.pay(100.0);
         bankAccount.refund(50.0);
         String output = outContent.toString();
@@ -110,7 +110,7 @@ public class BankAccountTest {
     }
 
     @Test
-    public void testDifferentAccountIds() {
+    public void DifferentAccountIds() {
         BankAccount account1 = new BankAccount("ACC001");
         BankAccount account2 = new BankAccount("ACC002");
         
