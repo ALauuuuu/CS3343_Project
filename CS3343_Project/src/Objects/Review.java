@@ -4,21 +4,21 @@ import java.util.Date;
 
 public class Review {
     private int reviewId;
-    private int userId;
+    private String userName;
     private int rating;
     private String comment;
     private Date date;
 
-    public Review(int reviewId, int userId, int rating, String comment, Date date) {
+    public Review(int reviewId, String userName, int rating, String comment, Date date) {
         this.reviewId = reviewId;
-        this.userId = userId;
+        this.userName = userName;
         this.rating = rating;
         this.comment = comment;
         this.date = date;
     }
 
     public String getReviewDetails() {
-        return "Rating: " + rating + " by User " + userId + " on " + date + "\n" + comment;
+        return "Rating: " + rating + " by User " + userName + " on " + date + "\n" + comment;
     }
 
     // Getters

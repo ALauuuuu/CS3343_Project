@@ -380,7 +380,7 @@ public class Customer {
                 System.out.println("Please enter comment");
                 String comment = userInput.next();
                 userInput.nextLine();
-                target.addReview(new Review(111,this.userId,rating,comment,new Date()));
+                target.addReview(new Review(111, this.userName, rating,comment,new Date()));
                 return;
             } catch (InputMismatchException e) {
                 System.out.println("Wrong input, please enter an integer.\n");
@@ -497,6 +497,7 @@ public class Customer {
             }
             PurchaseRecord target = purchaseHistory.get(choice-1);
             target.setStatus("Refunded");
+            this.notifications.add(new Notification(new Date(), " Refund successful!"));
         } catch (InputMismatchException e) {
             System.out.println("Wrong input, please enter an correct integer.\n");
             userInput.nextLine(); //clear buffer
@@ -570,6 +571,7 @@ public class Customer {
     private void addPaymentMethod(){
         System.out.println("\n=== Add Payment Method ===");
         System.out.println("Select payment method type:");
+        System.out.println("--------------------------");
         System.out.println("Option: 1 Bank Account");
         System.out.println("Option: 2 Credit Card");
         System.out.println("Option: 3 PayMe");

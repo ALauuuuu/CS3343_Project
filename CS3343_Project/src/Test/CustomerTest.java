@@ -12,6 +12,7 @@ import java.io.PrintStream;
 import Main.Main;
 import Menu.Menu;
 import User.Customer;
+import Instances.ItemInventory;
 
 public class CustomerTest {
 

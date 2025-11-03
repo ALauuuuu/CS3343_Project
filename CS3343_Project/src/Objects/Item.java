@@ -25,7 +25,7 @@ public class Item {
  
     public String getDetails() {
         return "Item code:" + itemCode + "\tItem name: " + name + "\tPrice: $" + price +
-               "\nCategory: " + category + "\tAverage rating: " + averageRating + "/ 5.0\tQuantity: " + quantity;
+               "\nCategory: " + category + "\tAverage rating: " + calculateAverageRating() + "/ 5.0\tQuantity: " + quantity;
     }
 
     public void showReviews(){
