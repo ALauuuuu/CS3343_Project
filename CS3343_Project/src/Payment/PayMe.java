@@ -1,26 +1,25 @@
 package Payment;
 
-
 public class PayMe implements PaymentMethod {
-    private String accountId;
+	private String accountId;
 
-    public PayMe(String accountId) {
-        this.accountId = accountId;
-    }
+	public PayMe(String accountId) {
+		this.accountId = accountId;
+	}
 
-    public String getAccountId() {
-        return accountId;
-    }
+	public String getAccountId() {
+		return accountId;
+	}
 
-    @Override
-    public boolean pay(double amount) {
-        System.out.println("Paid " + amount + " using PayMe " + accountId);
-        return true;
-    }
+	@Override
+	public boolean pay(double amount) {
+		System.out.println("Paid " + amount + " using PayMe " + accountId);
+		return true;
+	}
 
-    @Override
-    public boolean refund(double amount) {
-        System.out.println("Refunded " + amount + " to PayMe " + accountId);
-        return true;
-    }
+	@Override
+	public boolean refund(double amount) {
+		System.out.println("Refunded " + amount + " to PayMe " + accountId);
+		return true;
+	}
 }

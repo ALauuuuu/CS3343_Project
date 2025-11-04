@@ -15,6 +15,7 @@ import Objects.Notification;
 import Objects.PurchaseRecord;
 import Objects.Review;
 import Objects.ShoppingCart;
+import Objects.Transaction;
 import Payment.BankAccount;
 import Payment.CreditCard;
 import Payment.PayMe;
@@ -26,6 +27,7 @@ public class Customer {
     private int userId;
     private ShoppingCart shoppingCart;
     private List<PurchaseRecord> purchaseHistory;
+    private List<Transaction> transactions;
     private List<Notification> notifications;
     private static Scanner userInput = null;
     private List<BankAccount> bankAccount;
@@ -458,8 +460,8 @@ public class Customer {
                 return;
             } else {
                 int i = 1;
-                for(PurchaseRecord record : purchaseHistory){
-                    System.out.println(i + ": " + record.getDetails());
+                for(Transaction record : transactions){
+                    System.out.println(i + ": " + record.getTransactionDetails());
                     i++;
                 }
                 System.out.println("--------------------------");
@@ -489,15 +491,20 @@ public class Customer {
     private void refund(){
         System.out.println("--------------------------");
         userInput.nextLine();
-        System.out.println("Please enter target purchase number: ");
+        System.out.println("Please enter target Refund ID: ");
         try {
             int choice = userInput.nextInt();
             if(choice<1 || choice>purchaseHistory.size()){
                 throw new InputMismatchException();
             }
             PurchaseRecord target = purchaseHistory.get(choice-1);
+			if (target.getStatus() == "Refunded") {
+				System.out.println("This item has already been refunded.\n");
+				return;
+			}
             target.setStatus("Refunded");
             this.notifications.add(new Notification(new Date(), " Refund successful!"));
+            notifications.get(notifications.size()-1);
         } catch (InputMismatchException e) {
             System.out.println("Wrong input, please enter an correct integer.\n");
             userInput.nextLine(); //clear buffer
@@ -770,6 +777,7 @@ public class Customer {
 
         if(this.bankAccount.isEmpty() && this.creditCard.isEmpty() && this.payMe.isEmpty()){
             System.out.println("NO PAYMENT METHODS LINKED. PLEASE ADD A PAYMENT METHOD IN ACCOUNT INFORMATION.");
+            System.out.println("(Please go to Account Information > Add a payment method)");
             return;
         }
 
@@ -848,14 +856,18 @@ public class Customer {
 
             if(pm.pay(total)){
                 System.out.println("Payment successful!");
+                List<PurchaseRecord> allRecordsThisTime = new ArrayList<>();
                 for(Item item : this.shoppingCart.getCartItems()) {
                     PurchaseRecord record = new PurchaseRecord(
                         purchaseHistory == null ? 1 : purchaseHistory.size() + 1, 
                         item, new Date(), "Purchased");
                     this.addPurchaseRecord(record);
+                    allRecordsThisTime.add(record);
                     item.updateQuantity(item.getQuantity()-this.shoppingCart.getCartItemQuantity(item));
                 }
-
+				Transaction transaction = new Transaction(transactions == null ? 1 : transactions.size() + 1,
+						allRecordsThisTime, total, new Date(), "Completed");
+				this.addItemsPurchased(transaction);
                 if(this.notifications == null){
                     this.notifications = new ArrayList<>();
                 }
@@ -879,6 +891,13 @@ public class Customer {
             this.purchaseHistory = new ArrayList<>();
         }
         this.purchaseHistory.add(record);
+    }
+    
+    public void addItemsPurchased(Transaction itemsPurchased) {
+        if(this.transactions == null){
+            this.transactions = new ArrayList<>();
+        }
+        this.transactions.add(itemsPurchased);
     }
 
 }

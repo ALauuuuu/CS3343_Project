@@ -5,12 +5,12 @@ import java.util.List;
 
 public class Transaction {
     private int transactionId;
-    private List<Item> itemsPurchased;
+    private List<PurchaseRecord> itemsPurchased;
     private double totalAmount;
     private Date dateOfPurchase;
     private String status;
 
-    public Transaction(int transactionId, List<Item> itemsPurchased, double totalAmount, Date dateOfPurchase, String status) {
+    public Transaction(int transactionId, List<PurchaseRecord> itemsPurchased, double totalAmount, Date dateOfPurchase, String status) {
         this.transactionId = transactionId;
         this.itemsPurchased = itemsPurchased;
         this.totalAmount = totalAmount;
@@ -19,7 +19,7 @@ public class Transaction {
     }
 
     public String generateTransactionId() {
-        return "TXN" + System.currentTimeMillis();
+    	return "TXN" + System.currentTimeMillis();
     }
 
     public String generateReceipt() {
@@ -27,10 +27,15 @@ public class Transaction {
     }
 
     public String getTransactionDetails() {
-        return "Transaction ID: " + transactionId + ", Amount: " + totalAmount + ", Date: " + dateOfPurchase;
+    	String result = "Transaction ID: " + transactionId;
+    	for (PurchaseRecord record : itemsPurchased) {
+    		            result += "\n" + record.getDetails();
+    	}
+    	result += "\n" + "Total Amount: $" + totalAmount + ", Date: " + dateOfPurchase + ", Status: " + status + "\n";
+        return result;
     }
 
-    public List<Item> getItemsPurchased() {
+    public List<PurchaseRecord> getItemsPurchased() {
         return itemsPurchased;
     }
 
