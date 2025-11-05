@@ -865,7 +865,7 @@ public class Customer {
                     allRecordsThisTime.add(record);
                     item.updateQuantity(item.getQuantity()-this.shoppingCart.getCartItemQuantity(item));
                 }
-				Transaction transaction = new Transaction(transactions == null ? 1 : transactions.size() + 1,
+				Transaction transaction = new Transaction(System.currentTimeMillis(),
 						allRecordsThisTime, total, new Date(), "Completed");
 				this.addItemsPurchased(transaction);
                 if(this.notifications == null){

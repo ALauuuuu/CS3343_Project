@@ -4,13 +4,13 @@ import java.util.Date;
 import java.util.List;
 
 public class Transaction {
-    private int transactionId;
+    private long transactionId;
     private List<PurchaseRecord> itemsPurchased;
     private double totalAmount;
     private Date dateOfPurchase;
     private String status;
 
-    public Transaction(int transactionId, List<PurchaseRecord> itemsPurchased, double totalAmount, Date dateOfPurchase, String status) {
+    public Transaction(long transactionId, List<PurchaseRecord> itemsPurchased, double totalAmount, Date dateOfPurchase, String status) {
         this.transactionId = transactionId;
         this.itemsPurchased = itemsPurchased;
         this.totalAmount = totalAmount;
@@ -19,7 +19,7 @@ public class Transaction {
     }
 
     public String generateTransactionId() {
-    	return "TXN" + System.currentTimeMillis();
+    	return "TXN" + transactionId;
     }
 
     public String generateReceipt() {
@@ -27,7 +27,7 @@ public class Transaction {
     }
 
     public String getTransactionDetails() {
-    	String result = "Transaction ID: " + transactionId;
+    	String result = "Transaction ID: " + this.generateTransactionId();
     	for (PurchaseRecord record : itemsPurchased) {
     		            result += "\n" + record.getDetails();
     	}
