@@ -140,12 +140,6 @@ public class PurchaseRecordTest {
     }
 
     @Test
-    public void PurchaseRecordDetailsNotNull() {
-        String details = record.getDetails();
-        assertNotNull(details);
-    }
-
-    @Test
     public void PurchaseRecordDetailsNotEmpty() {
         String details = record.getDetails();
         assertFalse(details.isEmpty());
