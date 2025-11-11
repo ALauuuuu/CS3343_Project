@@ -14,16 +14,6 @@ import Main.Main;
 import Menu.Menu;
 import User.Customer;
 
-/**
- * These tests verify that Customer correctly integrates with:
- * - ShoppingCart
- * - ItemInventory
- * - Payment methods (BankAccount, CreditCard, PayMe)
- * - Menu navigation
- * 
- * Integration tests simulate complete user workflows through the UI
- */
-
 public class CustomerIntegrationTest {
 
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -405,7 +395,6 @@ public class CustomerIntegrationTest {
 		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
 		Menu.setInputStream(testInput);
 
-		// Complete journey: Browse → Search → Add to cart → Add payment → Checkout
 		input = "1\n3\n1\nLaptop\n1\n7\n1\ny\n5\n1\n1\nBA12345\n3\n4\n1\n1\n8\n";
 		testInput = new ByteArrayInputStream(input.getBytes());
 		Customer.setInputStream(testInput);
