@@ -14,16 +14,6 @@ import Main.Main;
 import Menu.Menu;
 import User.Customer;
 
-/**
- * These tests verify that Customer correctly integrates with:
- * - ShoppingCart
- * - ItemInventory
- * - Payment methods (BankAccount, CreditCard, PayMe)
- * - Menu navigation
- * 
- * Integration tests simulate complete user workflows through the UI
- */
-
 public class CustomerIntegrationTest {
 
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
