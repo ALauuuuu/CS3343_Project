@@ -40,15 +40,16 @@ public class CustomerIntegrationTest {
 		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
 		Menu.setInputStream(testInput);
 
-		input = "3\n1\nToys\n1\n1\n2\ny\n4\n8\n";
+		input = "3\n1\nToys\n1\n1\n2\ny\n4\n5\n1\n1\n4532111122223333\n3\n4\n1\n1\n4\n8";
 		testInput = new ByteArrayInputStream(input.getBytes());
 		Customer.setInputStream(testInput);
 
 		Menu.loginPage();
 		
 		String output = outContent.toString();
-		assertTrue(output.contains("Stock is not enough"));		
-		assertTrue(output.contains("Addition cancelled"));
+		assertTrue(output.contains("Item added to cart successfully!"));
+		assertTrue(output.contains("Bank Account linked successfully!"));
+		assertTrue(output.contains("Payment successful!"));
 	}
 	
 	@Test
