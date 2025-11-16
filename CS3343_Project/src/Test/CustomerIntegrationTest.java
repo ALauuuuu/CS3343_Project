@@ -379,7 +379,7 @@ public class CustomerIntegrationTest {
 		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
 		Menu.setInputStream(testInput);
 
-		input = "3\n1\nToys\n1\n1\n10\ny\n4\n8\n";
+		input = "3\n1\nToys\n1\n1\n999\ny\n4\n8\n";
 		testInput = new ByteArrayInputStream(input.getBytes());
 		Customer.setInputStream(testInput);
 
