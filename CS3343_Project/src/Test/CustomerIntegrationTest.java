@@ -407,5 +407,21 @@ public class CustomerIntegrationTest {
 		assertTrue(output.contains("Bank Account linked successfully"));
 		assertTrue(output.contains("Payment successful"));
 	}
+
+	@Test
+	public void FailedShoppingWorkFlow() {
+		String input = "1\nCustomer23\n3\n";
+		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
+		Menu.setInputStream(testInput);
+
+		input = "3\n1\nToys\n1\n1\n2\ny\n4\n4\n1\n4\n8\n";
+		testInput = new ByteArrayInputStream(input.getBytes());
+		Customer.setInputStream(testInput);
+
+		Menu.loginPage();
+		
+		String output = outContent.toString();
+		assertTrue(output.contains("NO PAYMENT METHODS LINKED. PLEASE ADD A PAYMENT METHOD IN ACCOUNT INFORMATION."));
+	}
 }
 
