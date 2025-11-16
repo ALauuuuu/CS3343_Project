@@ -90,23 +90,6 @@ public class CustomerIntegrationTest {
 		assertTrue(output.contains("Item added to cart successfully"));
 	}
 	
-	@Test
-	public void AddItemWithInsufficientStock() {
-		String input = "1\nCustomer14\n3\n";
-		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
-		Menu.setInputStream(testInput);
-
-		input = "3\n1\nToys\n1\n1\n1000\ny\n4\n8\n";
-		testInput = new ByteArrayInputStream(input.getBytes());
-		Customer.setInputStream(testInput);
-
-		Menu.loginPage();
-		
-		String output = outContent.toString();
-		assertTrue(output.contains("Stock is not enough"));
-		assertTrue(output.contains("Addition cancelled"));
-	}
-	
 	
 	@Test
 	public void AddBankAccountPaymentMethod() {
@@ -272,6 +255,23 @@ public class CustomerIntegrationTest {
 		
 		String output = outContent.toString();
 		assertTrue(output.contains("Wrong input, please enter an integer"));
+	}
+	
+	@Test
+	public void AddItemWithInsufficientStock() {
+		String input = "1\nCustomer14\n3\n";
+		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
+		Menu.setInputStream(testInput);
+
+		input = "3\n1\nToys\n1\n1\n1000\ny\n4\n8\n";
+		testInput = new ByteArrayInputStream(input.getBytes());
+		Customer.setInputStream(testInput);
+
+		Menu.loginPage();
+		
+		String output = outContent.toString();
+		assertTrue(output.contains("Stock is not enough"));
+		assertTrue(output.contains("Addition cancelled"));
 	}
 	
 	@Test
