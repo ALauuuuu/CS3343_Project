@@ -393,10 +393,10 @@ public class Customer {
 
     private void shoppingCartMenu(){
         //testing
-        this.shoppingCart.addItem(ItemInventory.searchByCode(1), 1);
-        this.shoppingCart.addItem(ItemInventory.searchByCode(2), 3);
-        this.shoppingCart.addItem(ItemInventory.searchByCode(3), 4);
-        this.shoppingCart.addItem(ItemInventory.searchByCode(1), 1);
+        // this.shoppingCart.addItem(ItemInventory.searchByCode(1), 1);
+        // this.shoppingCart.addItem(ItemInventory.searchByCode(2), 3);
+        // this.shoppingCart.addItem(ItemInventory.searchByCode(3), 4);
+        // this.shoppingCart.addItem(ItemInventory.searchByCode(1), 1);
         //
         while (true) {
             System.out.println("\nOnline Shopping > Shopping Cart");

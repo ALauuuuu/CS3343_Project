@@ -16,7 +16,7 @@ public class PurchaseRecord {
     }
 
     public String getDetails() {
-        return "Refund ID: " + recordId + ", Item: " + item.getName() + ", Date: " + purchaseDate + ", Status: " + status;
+        return "Record ID: " + recordId + ", Item: " + item.getName() + ", Date: " + purchaseDate + ", Status: " + status;
     }
 
     public void setStatus(String status){
