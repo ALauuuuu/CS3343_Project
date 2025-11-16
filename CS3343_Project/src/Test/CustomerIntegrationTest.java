@@ -40,7 +40,7 @@ public class CustomerIntegrationTest {
 		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
 		Menu.setInputStream(testInput);
 
-		input = "3\n1\nToys\n1\n1\n2\ny\n4\n5\n1\n1\n4532111122223333\n3\n4\n1\n1\n4\n8";
+		input = "3\n1\nToys\n1\n1\n2\ny\n5\n5\n1\n1\n4532111122223333\n3\n4\n1\n1\n4\n8";
 		testInput = new ByteArrayInputStream(input.getBytes());
 		Customer.setInputStream(testInput);
 
@@ -58,7 +58,7 @@ public class CustomerIntegrationTest {
 		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
 		Menu.setInputStream(testInput);
 
-		input = "3\n1\nToys\n1\n1\n2\ny\n3\n2\n5\n1\n5\n3\ny\n4\n8\n";
+		input = "3\n1\nToys\n1\n1\n2\ny\n3\n2\n5\n1\n5\n3\ny\n5\n8\n";
 		testInput = new ByteArrayInputStream(input.getBytes());
 		Customer.setInputStream(testInput);
 
@@ -80,7 +80,7 @@ public class CustomerIntegrationTest {
 		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
 		Menu.setInputStream(testInput);
 
-		input = "3\n1\nToys\n1\n1\n2\ny\n4\n8\n";
+		input = "3\n1\nToys\n1\n1\n2\ny\n5\n8\n";
 		testInput = new ByteArrayInputStream(input.getBytes());
 		Customer.setInputStream(testInput);
 
@@ -197,7 +197,7 @@ public class CustomerIntegrationTest {
 		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
 		Menu.setInputStream(testInput);
 
-		input = "3\n1\nToys\n1\n1\n2\ny\n4\n4\n1\n4\n8\n";
+		input = "3\n1\nToys\n1\n1\n2\ny\n5\n4\n1\n4\n8\n";
 		testInput = new ByteArrayInputStream(input.getBytes());
 		Customer.setInputStream(testInput);
 
@@ -213,7 +213,7 @@ public class CustomerIntegrationTest {
 		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
 		Menu.setInputStream(testInput);
 
-		input = "5\n1\n1\nBA888\n3\n3\n1\nToys\n1\n1\n2\ny\n4\n4\n1\n1\n4\n8\n";
+		input = "5\n1\n1\nBA888\n3\n3\n1\nToys\n1\n1\n2\ny\n5\n4\n1\n1\n4\n8\n";
 		testInput = new ByteArrayInputStream(input.getBytes());
 		Customer.setInputStream(testInput);
 
@@ -262,7 +262,7 @@ public class CustomerIntegrationTest {
 		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
 		Menu.setInputStream(testInput);
 
-		input = "3\n1\nToys\n1\n1\n1000\ny\n4\n8\n";
+		input = "3\n1\nToys\n1\n1\n1000\ny\n5\n8\n";
 		testInput = new ByteArrayInputStream(input.getBytes());
 		Customer.setInputStream(testInput);
 
@@ -279,7 +279,7 @@ public class CustomerIntegrationTest {
 		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
 		Menu.setInputStream(testInput);
 
-		input = "3\n1\nToys\n1\n1\n2\nn\n4\n8\n";
+		input = "3\n1\nToys\n1\n1\n2\nn\n5\n8\n";
 		testInput = new ByteArrayInputStream(input.getBytes());
 		Customer.setInputStream(testInput);
 
@@ -362,7 +362,7 @@ public class CustomerIntegrationTest {
 		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
 		Menu.setInputStream(testInput);
 
-		input = "3\n2\n7\n2\n4\n8\n";
+		input = "3\n2\n7\n2\n5\n8\n";
 		testInput = new ByteArrayInputStream(input.getBytes());
 		Customer.setInputStream(testInput);
 
@@ -379,7 +379,7 @@ public class CustomerIntegrationTest {
 		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
 		Menu.setInputStream(testInput);
 
-		input = "3\n1\nToys\n1\n1\n999\ny\n4\n8\n";
+		input = "3\n1\nToys\n1\n1\n999\ny\n5\n8\n";
 		testInput = new ByteArrayInputStream(input.getBytes());
 		Customer.setInputStream(testInput);
 
@@ -396,7 +396,7 @@ public class CustomerIntegrationTest {
 		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
 		Menu.setInputStream(testInput);
 
-		input = "1\n3\n1\nLaptop\n1\n7\n1\ny\n4\n5\n1\n1\nBA12345\n3\n4\n1\n1\n4\n8\n";
+		input = "1\n3\n1\nLaptop\n1\n7\n1\ny\n5\n5\n1\n1\nBA12345\n3\n4\n1\n1\n4\n8\n";
 		testInput = new ByteArrayInputStream(input.getBytes());
 		Customer.setInputStream(testInput);
 
@@ -414,7 +414,7 @@ public class CustomerIntegrationTest {
 		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
 		Menu.setInputStream(testInput);
 
-		input = "3\n1\nToys\n1\n1\n2\ny\n4\n4\n1\n4\n8\n";
+		input = "3\n1\nToys\n1\n1\n2\ny\n5\n4\n1\n4\n8\n";
 		testInput = new ByteArrayInputStream(input.getBytes());
 		Customer.setInputStream(testInput);
 
@@ -422,6 +422,8 @@ public class CustomerIntegrationTest {
 		
 		String output = outContent.toString();
 		assertTrue(output.contains("NO PAYMENT METHODS LINKED. PLEASE ADD A PAYMENT METHOD IN ACCOUNT INFORMATION."));
+		assertTrue(output.contains("(Please go to Account Information > Add a payment method)"));
+		
 	}
 }
 
