@@ -204,8 +204,7 @@ public class CustomerIntegrationTest {
 		Menu.loginPage();
 		
 		String output = outContent.toString();
-		assertTrue(output.contains("NO PAYMENT METHODS LINKED") || 
-			output.contains("PLEASE ADD A PAYMENT METHOD"));
+		assertTrue(output.contains("NO PAYMENT METHODS LINKED. PLEASE ADD A PAYMENT METHOD IN ACCOUNT INFORMATION."));
 	}
 	
 	@Test
