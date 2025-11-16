@@ -97,19 +97,25 @@ public class Admin {
     }
 
     public boolean addItem(Item newItem) {
-        // add item to inventory
-        ItemInventory.addItem(newItem);
-        return true; // pending to add actual success check
+    	if (ItemInventory.searchByCode(newItem.getItemCode()) != null) {
+    		return false;
+    	}
+    	ItemInventory.addItem(newItem);
+        return true;
     }
 
     public boolean removeItem(int itemId) {
-        // remove item from inventory
+    	if (ItemInventory.searchByCode(itemId) == null) {
+    		return false;
+    	}
         ItemInventory.removeItem(itemId);
         return true; // pending to add actual success check
     }
 
     public boolean edititem(int itemId, Item updatedInfo) {
-        // edit item in inventory
+    	if (ItemInventory.searchByCode(itemId) == null) {
+    		return false;
+    	}
         ItemInventory.removeItem(itemId);
         ItemInventory.addItem(updatedInfo);
         return true; // pending to add actual success check
@@ -171,8 +177,6 @@ public class Admin {
                 System.out.println("Item added.\n");
                 this.notificationManager.addNotifications(
                     new Notification(new java.util.Date(), "New item " + name + " added to inventory."));
-            } else {
-                System.out.println("Addition is failed.");
             }
         } else {
             System.out.println("Addition is cancelled.\n");

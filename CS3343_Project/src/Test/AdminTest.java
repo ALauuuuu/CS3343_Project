@@ -37,21 +37,39 @@ public class AdminTest {
 	}
 	
 	@Test
-	public void addItem() {
+	public void addItemTrue() {
 		boolean result = admin.addItem(new Item(111, "Poker", 500, "others", 100));
         assertTrue(result);
 	}
 	
 	@Test
-	public void removeItem() {
+	public void addItemFalse() {
+		boolean result = admin.addItem(new Item(1, "Poker", 500, "others", 100));
+        assertFalse(result);
+	}
+	
+	@Test
+	public void removeItemTrue() {
 		boolean result = admin.removeItem(1);
         assertTrue(result);
 	}
 	
 	@Test
-    public void editItem() {
+	public void removeItemFalse() {
+		boolean result = admin.removeItem(1000);
+        assertFalse(result);
+	}
+	
+	@Test
+    public void editItemTrue() {
 		boolean result = admin.edititem(1, new Item(1, "Poker", 500, "others", 100));
         assertTrue(result);
+    }
+	
+	@Test
+    public void editItemFalse() {
+		boolean result = admin.edititem(1000, new Item(1, "Poker", 500, "others", 100));
+        assertFalse(result);
     }
 	
 	@Test
@@ -201,6 +219,18 @@ public class AdminTest {
 	}
 	
 	@Test
+	public void handleRMNonExistItem() {
+        String input = "2\n1000\ny\n2\n5";
+        ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
+        Admin.setInputStream(testInput);
+        
+        admin.login();
+        
+		String output = outContent.toString();
+		assertTrue(output.contains("Removal cancelled."));
+	}
+	
+	@Test
 	public void handleRMAnotherItem() {
         String input = "2\n1\ny\n1\n2\ny\n2\n5";
         ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
@@ -271,6 +301,18 @@ public class AdminTest {
         
 		String output = outContent.toString();
 		assertTrue(output.contains("Invalid input! Please enter an INTEGER for quantity."));
+	}
+	
+	@Test
+	public void handleEditNonExistItem() {
+        String input = "3\n1000\nPoker\n700\nothers\n50\ny\n2\n5";
+        ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
+        Admin.setInputStream(testInput);
+        
+        admin.login();
+        
+		String output = outContent.toString();
+		assertTrue(output.contains("Edit cancelled."));
 	}
 	
 	@Test
