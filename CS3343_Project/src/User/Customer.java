@@ -382,7 +382,11 @@ public class Customer {
                 System.out.println("Please enter comment");
                 String comment = userInput.next();
                 userInput.nextLine();
-                target.addReview(new Review(111, this.userName, rating,comment,new Date()));
+                int reviewId = 1;
+				if (target.getReviews() != null) {
+					reviewId = target.getReviews().size() + 1;
+				}
+                target.addReview(new Review(reviewId, this.userName, rating,comment,new Date()));
                 return;
             } catch (InputMismatchException e) {
                 System.out.println("Wrong input, please enter an integer.\n");

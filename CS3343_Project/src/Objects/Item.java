@@ -28,17 +28,17 @@ public class Item {
                "\nCategory: " + category + "\tAverage rating: " + calculateAverageRating() + "/ 5.0\tQuantity: " + quantity;
     }
 
-    public void showReviews(){
+    public String showReviews(){
         if(this.reviews.isEmpty()){
-            System.out.println("No reviews.");
-            return;
+            return "No reviews.";
         }
-        int reviewsToPrint = 3;
-        if(reviews.size()<3)
-            reviewsToPrint = reviews.size();
-        for(int i = 0; i< reviewsToPrint; i++){
-            System.out.println(reviews.get(reviews.size()-1-i).getReviewDetails());
+        int reviewsToPrint = reviews.size();
+        String result = "";
+        for(int i = 0; i < reviewsToPrint; i++){
+            result += reviews.get(i).getReviewDetails() + "\n";
         }
+        
+        return result;
     }
 
     public boolean updateQuantity(int updatedQuantity) {
@@ -59,24 +59,26 @@ public class Item {
     }
 
     public static List<Item> sortByPrice(List<Item> list, String order) {
-        List<Item> output = new ArrayList<Item>(list);
-        if(order.equals("asc")){
-            output.sort(Comparator.comparingDouble(Item::getPrice));
+        if("asc".equalsIgnoreCase(order)){
+            list.sort(Comparator.comparingDouble(Item::getPrice));
         }else{
-            output.sort(Comparator.comparingDouble(Item::getPrice).reversed());
+            list.sort(Comparator.comparingDouble(Item::getPrice).reversed());
         }
-        return output;
+        return list;
     }
 
-    public static List<Item> sortByRating(List<Item> list, String order) {
-        List<Item> output = new ArrayList<Item>(list);
-        if(order.equals("asc")){
-            output.sort(Comparator.comparingDouble(Item::getAverageRating));
-        }else{
-            output.sort(Comparator.comparingDouble(Item::getAverageRating).reversed());
-        }
-        return output;
-    }
+	public static List<Item> sortByRating(List<Item> list, String order) {
+		for (Item item : list) {
+			item.calculateAverageRating();
+		}
+		
+		if ("asc".equalsIgnoreCase(order)) {
+			list.sort(Comparator.comparingDouble(Item::getAverageRating));
+		} else {
+			list.sort(Comparator.comparingDouble(Item::getAverageRating).reversed());
+		}
+		return list;
+	}
 
     // Getters and Setters
     public int getItemCode() {
