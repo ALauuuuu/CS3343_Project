@@ -22,7 +22,6 @@ public class CustomerTest {
 	@BeforeEach
 	public void setUp() {
 		System.setOut(new PrintStream(outContent));
-		// Clear inventory before each test
 		ItemInventory.getItems().clear();
 		Main.initializeInventory();
 	}
@@ -158,7 +157,6 @@ public class CustomerTest {
 		ByteArrayInputStream testInput = new ByteArrayInputStream(input.getBytes());
 		Menu.setInputStream(testInput);
 
-		// Search by name, then by code, then back to home
 		input = "3\n1\nToys\n2\n2\n5\n2\n5\n8\n";
 		testInput = new ByteArrayInputStream(input.getBytes());
 		Customer.setInputStream(testInput);
