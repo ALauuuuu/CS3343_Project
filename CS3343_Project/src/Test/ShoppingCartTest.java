@@ -7,6 +7,7 @@ import org.junit.jupiter.api.AfterEach;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.List;
 
 import Objects.Item;
 import Objects.ShoppingCart;
@@ -289,5 +290,43 @@ public class ShoppingCartTest {
 
         cart.clearCart();
         assertTrue(cart.isEmpty());
+    }
+    
+    @Test
+    public void DisplayCartOutput() {
+        cart.addItem(item1, 2);
+        cart.addItem(item2, 5);
+        
+        outContent.reset();
+        
+        cart.DisplayCart();
+        
+        String output = outContent.toString();
+        assertTrue(output.contains("Item code: 1"));
+        assertTrue(output.contains("Laptop"));
+        assertTrue(output.contains("Quantity: 2"));
+    }
+
+    @Test
+    public void AddItemInsufficientStockOutput() {
+        outContent.reset();
+        boolean result = cart.addItem(item1, 11);
+        
+        assertFalse(result);
+        assertTrue(outContent.toString().contains("Stock is not enough"));
+    }
+    
+    @Test
+    public void SortCartLogic() {
+
+        cart.addItem(item3, 1);
+        cart.addItem(item1, 1);
+        cart.addItem(item2, 1); 
+        
+        List<Item> items = cart.getCartItems();
+        
+        assertEquals(1, items.get(0).getItemCode());
+        assertEquals(2, items.get(1).getItemCode());
+        assertEquals(3, items.get(2).getItemCode());
     }
 }
