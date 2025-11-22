@@ -88,5 +88,13 @@ public class TransactionTest {
     public void getStatus() {
         assertTrue(transaction.getStatus() instanceof String);
     }
+
+    @Test
+    public void GenerateReceipt() {
+        String receipt = transaction.generateReceipt();
+        assertNotNull(receipt);
+        assertTrue(receipt.contains("Receipt for transaction"));
+        assertFalse(receipt.contains("Transaction")); 
+    }
     
 }
