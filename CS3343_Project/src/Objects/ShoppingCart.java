@@ -24,6 +24,7 @@ public class ShoppingCart {
         ));
         cartItems = sorted;
     }
+
     public boolean addItem(Item item, int quantity) {
         if(item.getQuantity()< quantity + cartItems.getOrDefault(item, 0)){
             System.out.println("Stock is not enough.");
@@ -57,6 +58,7 @@ public class ShoppingCart {
     public void clearCart() {
         cartItems.clear();
     }
+    
     public void DisplayCart(){
         int i = 1;
         for (Item item : cartItems.keySet()) {

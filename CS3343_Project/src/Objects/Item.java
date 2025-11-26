@@ -119,6 +119,7 @@ public class Item {
     public void setCanReview(boolean enabled){
         this.canReview = enabled;
     }
+    
     public boolean getCanReview(){
         return this.canReview;
     } 
